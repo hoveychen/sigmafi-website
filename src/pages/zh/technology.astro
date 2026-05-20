@@ -107,9 +107,176 @@ const cws = [
     </div>
   </section>
 
+  {/* 研究方法 */}
   <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 items-start">
+      <div class="lg:col-span-5">
+        <p class="eyebrow" data-reveal>§ 03 — 研究方法</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          管线学会
+          <span class="text-[var(--color-signal-hi)]">改写自己。</span>
+        </h2>
+      </div>
+      <div class="lg:col-span-7 grid gap-6 md:grid-cols-2">
+        <p class="text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          量化研究员先把一条策略要走的完整管线亲手搭出来——取数、清洗、特征、回测、定仓、执行。
+          这条管线就是教学大纲。其中每一个能被清晰界定的子问题，都被建模成一个自包含模块：
+          显式的 IO 契约、验收测试、自己的 settings 与 skill 注册表。
+        </p>
+        <p class="text-[var(--color-bone-dim)] leading-relaxed" data-reveal style="animation-delay: 80ms;">
+          一个 supervisor AI 持续观察这些模块在真实工作中产生的执行轨迹，
+          从历史里挖盲点与被错过的捷径，然后向出问题的模块写补丁——改它的 settings、扩它的 skill。
+          相同的任务在相同数据上以 ablation 方式复跑，
+          只有当 Δ 越过噪声底线时，补丁才被接受上线。
+        </p>
+      </div>
+    </div>
+
+    {/* 4 步横向流程 */}
+    <div class="relative mt-16">
+      <svg
+        class="pointer-events-none absolute inset-x-0 -bottom-8 h-24 w-full hidden md:block"
+        viewBox="0 0 1000 100"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <marker id="loop-arrow-zh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--color-signal-2)" />
+          </marker>
+        </defs>
+        <path
+          d="M 920 10 C 920 80, 600 95, 375 95 C 200 95, 180 80, 180 25"
+          fill="none"
+          stroke="var(--color-signal-2)"
+          stroke-width="1.2"
+          stroke-dasharray="5 5"
+          marker-end="url(#loop-arrow-zh)"
+          opacity="0.65"
+        />
+        <text x="500" y="78" text-anchor="middle" fill="var(--color-signal-2)" class="font-mono" font-size="11" letter-spacing="2">
+          META-LOOP · SUPERVISOR 改写模块
+        </text>
+      </svg>
+
+      <ol class="grid grid-cols-1 gap-4 md:grid-cols-4">
+        {
+          [
+            {
+              n: "01",
+              t: "专家管线",
+              d: "量化研究员亲手画出从想法到实盘的完整路径——这条管线就是 SigmaFi 真实出货的标准流程。",
+              svg: (
+                <svg viewBox="0 0 120 40" class="w-full h-12">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <>
+                      <rect x={6 + i * 22} y={12} width={16} height={16} rx={2} fill="none" stroke="var(--color-bone-dim)" stroke-width="1" />
+                      {i < 4 && <line x1={22 + i * 22} y1={20} x2={28 + i * 22} y2={20} stroke="var(--color-bone-dim)" stroke-width="1" />}
+                    </>
+                  ))}
+                </svg>
+              ),
+            },
+            {
+              n: "02",
+              t: "模块化分解",
+              d: "管线里每个能被清晰界定的子问题，都变成一个自包含模块：显式 IO、验收测试、自己的 settings 与 skill 注册表，可独立迭代。",
+              svg: (
+                <svg viewBox="0 0 120 40" class="w-full h-12">
+                  {[0, 1, 2, 3].map((col) =>
+                    [0, 1].map((row) => (
+                      <rect
+                        x={10 + col * 26}
+                        y={6 + row * 18}
+                        width={18}
+                        height={12}
+                        rx={2}
+                        fill="none"
+                        stroke="var(--color-signal-hi)"
+                        stroke-width="1"
+                        opacity={0.85}
+                      />
+                    )),
+                  )}
+                </svg>
+              ),
+            },
+            {
+              n: "03",
+              t: "Supervisor AI",
+              d: "元 agent 收集所有真实工作中产生的执行轨迹，挖失败模式与被错过的捷径，然后向出问题的模块写补丁——改它的 settings、扩它的 skill。",
+              svg: (
+                <svg viewBox="0 0 120 40" class="w-full h-12">
+                  <circle cx={60} cy={20} r={9} fill="none" stroke="var(--color-signal-2)" stroke-width="1.2" />
+                  <circle cx={60} cy={20} r={2.5} fill="var(--color-signal-hi)" />
+                  {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => {
+                    const a = (i * Math.PI) / 4;
+                    const x1 = 60 + Math.cos(a) * 13;
+                    const y1 = 20 + Math.sin(a) * 13;
+                    const x2 = 60 + Math.cos(a) * 19;
+                    const y2 = 20 + Math.sin(a) * 19;
+                    return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-signal-2)" stroke-width="1" opacity={0.6} />;
+                  })}
+                </svg>
+              ),
+            },
+            {
+              n: "04",
+              t: "Ablation 复跑",
+              d: "打了补丁的模块在相同数据上复跑同一任务，与基线轨迹做比特级对比。Δ 越过噪声底线才上线，否则丢弃。",
+              svg: (
+                <svg viewBox="0 0 120 40" class="w-full h-12">
+                  <line x1={10} y1={32} x2={110} y2={32} stroke="var(--color-bone-dim)" stroke-width="0.6" />
+                  <rect x={22} y={20} width={14} height={12} fill="var(--color-bone-dim)" opacity={0.5} />
+                  <rect x={44} y={14} width={14} height={18} fill="var(--color-signal-hi)" opacity={0.85} />
+                  <rect x={66} y={24} width={14} height={8} fill="var(--color-bone-dim)" opacity={0.5} />
+                  <rect x={88} y={10} width={14} height={22} fill="var(--color-signal-hi)" opacity={0.85} />
+                </svg>
+              ),
+            },
+          ].map((s, i) => (
+            <li
+              class="relative rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] p-6"
+              data-reveal
+              style={`animation-delay: ${60 * i}ms`}
+            >
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] tracking-[0.22em] text-[var(--color-signal-2)]">STEP {s.n}</span>
+                {i < 3 && (
+                  <span aria-hidden="true" class="hidden md:inline text-[var(--color-signal-2)] font-mono text-sm">→</span>
+                )}
+              </div>
+              <h3 class="mt-4 font-display text-lg font-medium text-[var(--color-bone)]">{s.t}</h3>
+              <div class="mt-4">{s.svg}</div>
+              <p class="mt-4 text-sm leading-relaxed text-[var(--color-bone-dim)]">{s.d}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    {/* 指标卡 */}
+    <div class="mt-20 md:mt-24 grid grid-cols-2 gap-4 md:grid-cols-4">
+      {
+        [
+          { k: "自迭代模块数", v: "约 120", t: "横跨整条管线" },
+          { k: "Ablation / 周", v: "约 800", t: "Supervisor 自发起" },
+          { k: "补丁采纳率", v: "约 31%", t: "Δ 越过噪声底线" },
+          { k: "想法 → 实盘", v: "6 天", t: "中位数，CWS 化之后" },
+        ].map((s, i) => (
+          <div class="rounded-xl border border-[var(--color-rule-ink)] bg-[var(--color-ink)] p-5" data-reveal style={`animation-delay: ${40 * i}ms`}>
+            <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">{s.k}</p>
+            <p class="mt-3 font-display text-2xl font-medium text-[var(--color-bone)] tabular-nums">{s.v}</p>
+            <p class="mt-1 font-mono text-[10px] tracking-[0.14em] text-[var(--color-muted-ink)]">{s.t}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="border-t border-[var(--color-rule-ink)] container-x py-20 md:py-28">
     <div class="max-w-3xl">
-      <p class="eyebrow" data-reveal>§ 03 — 架构</p>
+      <p class="eyebrow" data-reveal>§ 04 — 架构</p>
       <h2 class="display mt-4 text-display-lg" data-reveal>
         四层架构，
         <span class="text-[var(--color-signal-hi)]">全部可比特级重放。</span>
@@ -151,7 +318,7 @@ const cws = [
     <div class="container-x py-20 md:py-28">
       <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
         <div class="lg:col-span-5">
-          <p class="eyebrow" data-reveal>§ 04 — 工程</p>
+          <p class="eyebrow" data-reveal>§ 05 — 工程</p>
           <h2 class="display mt-4 text-display-md" data-reveal>
             延迟是
             <span class="text-[var(--color-signal-hi)]">一项设计选择。</span>
@@ -187,7 +354,7 @@ const cws = [
   <section class="container-x py-20 md:py-28">
     <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
       <div class="lg:col-span-5">
-        <p class="eyebrow" data-reveal>§ 05 — 韧性</p>
+        <p class="eyebrow" data-reveal>§ 06 — 韧性</p>
         <h2 class="display mt-4 text-display-md" data-reveal>
           无聊的基础设施，
           <span class="text-[var(--color-signal-hi)]">平静的交易台。</span>

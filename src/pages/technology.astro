@@ -112,10 +112,181 @@ const cws = [
     </div>
   </section>
 
-  {/* Architecture */}
+  {/* Research method */}
   <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 items-start">
+      <div class="lg:col-span-5">
+        <p class="eyebrow" data-reveal>§ 03 — Research method</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          The pipeline learns
+          <span class="text-[var(--color-signal-hi)]">to rewrite itself.</span>
+        </h2>
+      </div>
+      <div class="lg:col-span-7 grid gap-6 md:grid-cols-2">
+        <p class="text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          Our quants hand-build the canonical pipeline a strategy travels —
+          ingest, clean, feature, backtest, size, execute. That pipeline is
+          the syllabus. Every well-defined sub-problem inside it becomes a
+          self-contained module with explicit inputs, outputs, and acceptance
+          tests.
+        </p>
+        <p class="text-[var(--color-bone-dim)] leading-relaxed" data-reveal style="animation-delay: 80ms;">
+          A supervisor AI watches every execution trace those modules
+          generate in real work, mines the history for blind spots and missed
+          shortcuts, and proposes patches to the offending module's settings
+          and skill registry. The same task is then re-run as an ablation;
+          the patch ships only if Δ clears the noise floor.
+        </p>
+      </div>
+    </div>
+
+    {/* 4-step horizontal flow */}
+    <div class="relative mt-16">
+      {/* meta-loop SVG overlay */}
+      <svg
+        class="pointer-events-none absolute inset-x-0 -bottom-8 h-24 w-full hidden md:block"
+        viewBox="0 0 1000 100"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <marker id="loop-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--color-signal-2)" />
+          </marker>
+        </defs>
+        <path
+          d="M 920 10 C 920 80, 600 95, 375 95 C 200 95, 180 80, 180 25"
+          fill="none"
+          stroke="var(--color-signal-2)"
+          stroke-width="1.2"
+          stroke-dasharray="5 5"
+          marker-end="url(#loop-arrow)"
+          opacity="0.65"
+        />
+        <text x="500" y="78" text-anchor="middle" fill="var(--color-signal-2)" class="font-mono" font-size="11" letter-spacing="2">
+          META-LOOP · SUPERVISOR REWRITES MODULES
+        </text>
+      </svg>
+
+      <ol class="grid grid-cols-1 gap-4 md:grid-cols-4">
+        {
+          [
+            {
+              n: "01",
+              t: "Expert pipeline",
+              d: "Quants hand-build the canonical journey a strategy takes from idea to live order. It encodes how we already ship at SigmaFi.",
+              svg: (
+                <svg viewBox="0 0 120 40" class="w-full h-12">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <>
+                      <rect x={6 + i * 22} y={12} width={16} height={16} rx={2} fill="none" stroke="var(--color-bone-dim)" stroke-width="1" />
+                      {i < 4 && <line x1={22 + i * 22} y1={20} x2={28 + i * 22} y2={20} stroke="var(--color-bone-dim)" stroke-width="1" />}
+                    </>
+                  ))}
+                </svg>
+              ),
+            },
+            {
+              n: "02",
+              t: "Modular decomposition",
+              d: "Each well-defined sub-problem becomes a self-contained module: explicit IO contract, acceptance tests, settings, skill registry. Independently iterable.",
+              svg: (
+                <svg viewBox="0 0 120 40" class="w-full h-12">
+                  {[0, 1, 2, 3].map((col) =>
+                    [0, 1].map((row) => (
+                      <rect
+                        x={10 + col * 26}
+                        y={6 + row * 18}
+                        width={18}
+                        height={12}
+                        rx={2}
+                        fill="none"
+                        stroke="var(--color-signal-hi)"
+                        stroke-width="1"
+                        opacity={0.85}
+                      />
+                    )),
+                  )}
+                </svg>
+              ),
+            },
+            {
+              n: "03",
+              t: "Supervisor AI",
+              d: "A meta-agent ingests every execution trace from real work, mines them for failure patterns, and writes patches to the offending module's settings and skills.",
+              svg: (
+                <svg viewBox="0 0 120 40" class="w-full h-12">
+                  <circle cx={60} cy={20} r={9} fill="none" stroke="var(--color-signal-2)" stroke-width="1.2" />
+                  <circle cx={60} cy={20} r={2.5} fill="var(--color-signal-hi)" />
+                  {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => {
+                    const a = (i * Math.PI) / 4;
+                    const x1 = 60 + Math.cos(a) * 13;
+                    const y1 = 20 + Math.sin(a) * 13;
+                    const x2 = 60 + Math.cos(a) * 19;
+                    const y2 = 20 + Math.sin(a) * 19;
+                    return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--color-signal-2)" stroke-width="1" opacity={0.6} />;
+                  })}
+                </svg>
+              ),
+            },
+            {
+              n: "04",
+              t: "Ablation re-run",
+              d: "The patched module reruns the exact same task on the exact same data. We compare bit-exactly to the baseline. Ship only if Δ clears noise; reject otherwise.",
+              svg: (
+                <svg viewBox="0 0 120 40" class="w-full h-12">
+                  <line x1={10} y1={32} x2={110} y2={32} stroke="var(--color-bone-dim)" stroke-width="0.6" />
+                  <rect x={22} y={20} width={14} height={12} fill="var(--color-bone-dim)" opacity={0.5} />
+                  <rect x={44} y={14} width={14} height={18} fill="var(--color-signal-hi)" opacity={0.85} />
+                  <rect x={66} y={24} width={14} height={8} fill="var(--color-bone-dim)" opacity={0.5} />
+                  <rect x={88} y={10} width={14} height={22} fill="var(--color-signal-hi)" opacity={0.85} />
+                </svg>
+              ),
+            },
+          ].map((s, i) => (
+            <li
+              class="relative rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] p-6"
+              data-reveal
+              style={`animation-delay: ${60 * i}ms`}
+            >
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] tracking-[0.22em] text-[var(--color-signal-2)]">STEP {s.n}</span>
+                {i < 3 && (
+                  <span aria-hidden="true" class="hidden md:inline text-[var(--color-signal-2)] font-mono text-sm">→</span>
+                )}
+              </div>
+              <h3 class="mt-4 font-display text-lg font-medium text-[var(--color-bone)]">{s.t}</h3>
+              <div class="mt-4">{s.svg}</div>
+              <p class="mt-4 text-sm leading-relaxed text-[var(--color-bone-dim)]">{s.d}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    {/* metrics row */}
+    <div class="mt-20 md:mt-24 grid grid-cols-2 gap-4 md:grid-cols-4">
+      {
+        [
+          { k: "Self-improving modules", v: "~ 120", t: "across the pipeline" },
+          { k: "Ablations / week", v: "~ 800", t: "supervisor-initiated" },
+          { k: "Patch acceptance", v: "~ 31%", t: "Δ clears noise floor" },
+          { k: "Idea → live", v: "6 days", t: "median, since adopting CWS" },
+        ].map((s, i) => (
+          <div class="rounded-xl border border-[var(--color-rule-ink)] bg-[var(--color-ink)] p-5" data-reveal style={`animation-delay: ${40 * i}ms`}>
+            <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">{s.k}</p>
+            <p class="mt-3 font-display text-2xl font-medium text-[var(--color-bone)] tabular-nums">{s.v}</p>
+            <p class="mt-1 font-mono text-[10px] tracking-[0.14em] text-[var(--color-muted-ink)]">{s.t}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {/* Architecture */}
+  <section class="border-t border-[var(--color-rule-ink)] container-x py-20 md:py-28">
     <div class="max-w-3xl">
-      <p class="eyebrow" data-reveal>§ 03 — Architecture</p>
+      <p class="eyebrow" data-reveal>§ 04 — Architecture</p>
       <h2 class="display mt-4 text-display-lg" data-reveal>
         Four layers,
         <span class="text-[var(--color-signal-hi)]">all bit-exactly replayable.</span>
@@ -163,7 +334,7 @@ const cws = [
     <div class="container-x py-20 md:py-28">
       <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
         <div class="lg:col-span-5">
-          <p class="eyebrow" data-reveal>§ 04 — Engineering</p>
+          <p class="eyebrow" data-reveal>§ 05 — Engineering</p>
           <h2 class="display mt-4 text-display-md" data-reveal>
             Latency is a
             <span class="text-[var(--color-signal-hi)]">design choice.</span>
@@ -202,7 +373,7 @@ const cws = [
   <section class="container-x py-20 md:py-28">
     <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
       <div class="lg:col-span-5">
-        <p class="eyebrow" data-reveal>§ 05 — Resilience</p>
+        <p class="eyebrow" data-reveal>§ 06 — Resilience</p>
         <h2 class="display mt-4 text-display-md" data-reveal>
           Boring infrastructure.
           <span class="text-[var(--color-signal-hi)]">Calm desks.</span>
