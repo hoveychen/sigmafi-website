@@ -1,0 +1,220 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PageHero from "~/components/PageHero.astro";
+import SignalChart from "~/components/SignalChart.astro";
+import { localizePath } from "~/i18n/ui";
+
+const lang = "zh" as const;
+
+const pillars = [
+  {
+    code: "01",
+    title: "统计套利与配对交易",
+    body:
+      "我们对成千上万的相关资产进行排名，构建多空组合以降低保证金压力，并在多个场所快速执行——捕捉本应同步运动的资产之间均值回归的噪声。",
+    properties: ["横截面", "排名法", "多场所执行", "日内—日间"],
+  },
+  {
+    code: "02",
+    title: "横截面动量与反转",
+    body:
+      "相对强度信号做多前十分位、做空后十分位；短期均值回归则捕捉近期过度延展后的回拉。仓位按已实现波动率回路调整。",
+    properties: ["相对价值", "波动率目标", "日内 + 日间", "感知市场状态"],
+  },
+  {
+    code: "03",
+    title: "多因子组合",
+    body:
+      "动量、价值、套利、低波、质量——一个完整的因子库，在风险感知的优化器下每日跨区域、跨资产再平衡。容量感知的仓位控制让账本始终诚实。",
+    properties: ["跨资产", "日再平衡", "风险预算", "容量感知"],
+  },
+  {
+    code: "04",
+    title: "跨场所套利与高频执行",
+    body:
+      "内核旁路网络、自研撮合接入层、同地协议——捕捉跨交易所、暗池与衍生品对之间转瞬即逝的价差。",
+    properties: ["亚毫秒", "同地", "跨场所", "感知延迟"],
+  },
+  {
+    code: "05",
+    title: "机器学习与另类数据",
+    body:
+      "梯度提升集成、Transformer 时序模型与概率图模型——基于订单流不平衡、期权偏度、新闻嵌入和链上信号训练。",
+    properties: ["Transformer", "GBM", "订单流", "新闻 + 链上"],
+  },
+];
+
+const lifecycle = [
+  { k: "假设", v: "阅读、猜想、形式化。一个 harness 化的子系统每天阅读论文、提炼假设。" },
+  { k: "回测", v: "向量化重放在比特级一致的历史微观结构上跑通。无前视、无幸存者偏差、无四舍五入作弊。" },
+  { k: "压力", v: "把策略放进 2008、2015、2018 波动率冲击、2020 疫情、2022 利率周期，以及合成冲击。我们按最差合理一周来设仓位，不按平均月。" },
+  { k: "模拟", v: "实时数据、真实场所、零风险敞口。实时对比回测，只有滑点剖面与预期一致时才允许进入下一步。" },
+  { k: "生产", v: "在容量感知下放量，按策略 dashboard 监控；紧急熔断由独立的风险团队掌握。" },
+  { k: "退役", v: "策略衰减到预期半衰期之外，就在它泄露之前退役。纪律高于情怀。" },
+];
+---
+
+<BaseLayout
+  title="研究"
+  description="五条策略支柱、一套自我迭代的研究基座——SigmaFi 如何把文献、数据与代码转化为可部署的 alpha。"
+>
+  <PageHero
+    eyebrow="§ 研究"
+    meta="方法 · 策略 · 生命周期"
+    title={"持续复利的<br/><span class=\"text-[var(--color-signal-hi)]\">研究。</span>"}
+    subtitle="我们把研究视为一个自我迭代的系统，而不是一连串孤立的押注。假设、回测、压力测试、实盘监控共享同一基座——好的想法从论文到生产的距离，是数日，而非数季。"
+  />
+
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <p class="eyebrow" data-reveal>§ 01 — 策略库</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          五条支柱，
+          <br/>
+          <span class="text-[var(--color-signal-hi)]">同一套基座。</span>
+        </h2>
+        <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          每条支柱继承同一套数据骨架、同一套回测器、同一套风险系统。
+          正因如此，我们可以在它们之间混合、对冲、按容量预算分配。
+        </p>
+      </div>
+      <div class="lg:col-span-8 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-2">
+        {
+          pillars.map((p, i) => (
+            <article
+              class="group relative bg-[var(--color-ink-2)] p-7 transition-colors hover:bg-[var(--color-ink-3)]"
+              data-reveal
+              style={`animation-delay: ${60 * i}ms`}
+            >
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)]">{p.code}</span>
+                <span class="font-mono text-[10px] tracking-[0.22em] text-[var(--color-muted-ink)]">PILLAR</span>
+              </div>
+              <h3 class="mt-4 font-display text-xl font-medium text-[var(--color-bone)]">{p.title}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">{p.body}</p>
+              <ul class="mt-5 flex flex-wrap gap-1.5">
+                {p.properties.map((pp) => (
+                  <li class="rounded-full border border-[var(--color-rule-ink)] px-2.5 py-1 font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--color-bone-dim)]">{pp}</li>
+                ))}
+              </ul>
+            </article>
+          ))
+        }
+        <article class="bg-[var(--color-ink-2)] p-7 flex flex-col justify-between">
+          <div>
+            <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-muted-ink)]">+ N</span>
+            <h3 class="mt-4 font-display text-xl font-medium text-[var(--color-bone)]">孵化中</h3>
+            <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">
+              每周大约 120 条假设进入管线。绝大多数会失败——这正是它的意义。
+              那些通过回测、压力测试、纸面交易的，会反过来塑造下一轮迭代。
+            </p>
+          </div>
+          <a
+            href={localizePath("/technology", lang)}
+            class="mt-6 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-[var(--color-signal-hi)] hover:text-[var(--color-signal)]"
+          >
+            查看平台 →
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="max-w-3xl">
+        <p class="eyebrow" data-reveal>§ 02 — 研究生命周期</p>
+        <h2 class="display mt-4 text-display-lg" data-reveal>
+          每一条信号都要穿过
+          <span class="text-[var(--color-signal-hi)]">同样的六道闸门。</span>
+        </h2>
+        <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          没有任何一个想法能仅凭直觉进入生产。下方生命周期把这条底线写在了流程里：
+          账本上的每条策略都已经穿过这些闸门，并且每天还在重新穿过。
+        </p>
+      </div>
+
+      <ol class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-3">
+        {
+          lifecycle.map((s, i) => (
+            <li class="bg-[var(--color-ink)] p-7" data-reveal style={`animation-delay: ${60 * i}ms`}>
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)]">{String(i + 1).padStart(2, "0")}</span>
+                <span class="font-mono text-[10px] tracking-[0.22em] text-[var(--color-muted-ink)]">GATE</span>
+              </div>
+              <h3 class="mt-4 font-display text-xl font-medium text-[var(--color-bone)]">{s.k}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">{s.v}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-6">
+        <p class="eyebrow" data-reveal>§ 03 — 数据基座</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          每条信号都需要一段
+          <span class="text-[var(--color-signal-hi)]">干净、可重放的历史。</span>
+        </h2>
+        <p class="mt-6 max-w-md text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          我们整理了一套去重、比特级一致的市场与另类数据归档——从 tick 级订单簿
+          到公告、新闻、期权隐含波动率曲面、链上转账。所有回测读同一份存储，
+          所有研究员从同一份事实出发。
+        </p>
+
+        <dl class="mt-10 grid grid-cols-2 gap-y-6 gap-x-8 max-w-md">
+          {
+            [
+              { k: "Tick L2/L3", v: "订单簿深度 · 逐笔" },
+              { k: "期权", v: "隐含波动率曲面 · IV / 偏度 / 期限" },
+              { k: "基本面", v: "公告 · 一致预期 · 修正" },
+              { k: "另类数据", v: "新闻 · 嵌入 · 链上" },
+              { k: "宏观", v: "利率 · 曲线 · 跨货币" },
+              { k: "微观结构", v: "竞价 · 撤单 · 成交" },
+            ].map((d) => (
+              <div>
+                <dt class="font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--color-signal-2)]">{d.k}</dt>
+                <dd class="mt-1.5 text-sm text-[var(--color-bone-dim)]">{d.v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      <div class="lg:col-span-6" data-reveal>
+        <div class="rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] p-3">
+          <div class="flex items-center justify-between border-b border-[var(--color-rule-ink)] px-3 py-2.5">
+            <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">cws://research/portfolio.composite</span>
+            <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-up)]">● 实时</span>
+          </div>
+          <div class="px-2 py-2">
+            <SignalChart points={110} lines={3} seed={29} caption="组合综合信号 · 示意图" />
+          </div>
+        </div>
+        <p class="mt-4 font-mono text-[10px] leading-relaxed tracking-[0.14em] uppercase text-[var(--color-muted-ink)]">
+          * 仅作视觉呈现，不构成对过去、当前或未来表现的任何陈述。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-x py-16 md:py-24 border-t border-[var(--color-rule-ink)]">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 items-end">
+      <h3 class="md:col-span-2 display text-display-md max-w-3xl">
+        读懂文献，构建基座，
+        <span class="text-[var(--color-signal-hi)]">挣得 alpha。</span>
+      </h3>
+      <a
+        href={localizePath("/technology", lang)}
+        class="inline-flex items-center gap-3 self-start rounded-full border border-[var(--color-rule-ink)] px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+      >
+        查看平台
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

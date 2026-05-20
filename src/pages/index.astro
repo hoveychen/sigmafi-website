@@ -1,0 +1,656 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import TickerBar from "~/components/TickerBar.astro";
+import SignalChart from "~/components/SignalChart.astro";
+import { localizePath } from "~/i18n/ui";
+
+const lang = "en" as const;
+
+const pillars = [
+  {
+    code: "01",
+    title: "Statistical arbitrage",
+    body:
+      "Cross-sectional pricing relationships, rank-based long/short books and rapid cross-market execution — capturing the mean-reverting noise between correlated instruments.",
+  },
+  {
+    code: "02",
+    title: "Cross-asset momentum & mean reversion",
+    body:
+      "Relative-value signals that buy strength and fade exhaustion. Built across equities, ETFs, futures and digital assets, sized by realised volatility regimes.",
+  },
+  {
+    code: "03",
+    title: "Multi-factor portfolios",
+    body:
+      "A library of factor exposures — momentum, value, carry, low-vol, quality — combined under a risk-aware optimiser that rebalances daily across regions.",
+  },
+  {
+    code: "04",
+    title: "Low-latency execution & cross-venue arb",
+    body:
+      "Custom matching-engine adapters, kernel-bypass networking and co-located gateways harvest fleeting price differentials across exchanges and dark pools.",
+  },
+  {
+    code: "05",
+    title: "Machine learning & alternative data",
+    body:
+      "Order-flow imbalance, options skew, news embeddings and on-chain signals fused via gradient-boosted ensembles and transformer-style sequence models.",
+  },
+];
+
+const markets = [
+  {
+    tag: "EQUITIES · ETFs",
+    title: "ETFs, single names and ADRs",
+    body:
+      "Liquidity provision and statistical strategies across US, Hong Kong, Japan and pan-Asia listings. Inheriting the ETF-pricing discipline our team built at Jane Street.",
+    metrics: ["US · HKEX · TSE", "Cash · ADR · GDR", "Cont. quoting"],
+  },
+  {
+    tag: "DERIVATIVES",
+    title: "Options, futures & volatility",
+    body:
+      "Volatility arbitrage, calendar and skew trades, listed-vs-OTC dislocations — backed by ML-driven implied-surface calibration and risk-parity sizing.",
+    metrics: ["3,800+ contracts", "Listed · OTC", "Vol surface ML"],
+  },
+  {
+    tag: "RATES · FX",
+    title: "Fixed income & macro",
+    body:
+      "Yield-curve trades, basis swaps, cross-currency basis and macro spread strategies — the playbook refined at Citadel applied to a modern compute stack.",
+    metrics: ["Sov bonds", "IRS · OIS", "Cross-ccy basis"],
+  },
+  {
+    tag: "CRYPTO · PREDICTION",
+    title: "Digital assets & prediction markets",
+    body:
+      "We started as a crypto market maker. We still trade BTC, ETH and majors, and we're pushing into prediction markets where short-horizon information edges abound.",
+    metrics: ["BTC · ETH · majors", "DEX · CEX", "Prediction MMs"],
+  },
+];
+
+const teamBackgrounds = [
+  "Jane Street",
+  "Citadel",
+  "Getco",
+  "Google",
+  "SIG",
+  "Two Sigma",
+  "Princeton",
+  "MIT",
+  "Berkeley",
+  "Tsinghua",
+  "Columbia",
+];
+---
+
+<BaseLayout
+  title="SigmaFi Research"
+  description="A technology-driven multi-asset quantitative trading firm. Founded by alumni of Jane Street, Getco and Google — applying frontier ML and low-latency engineering to ETFs, options, futures and prediction markets."
+>
+  {/* ============ HERO ============ */}
+  <section class="relative isolate overflow-hidden">
+    {/* background grid */}
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 grid-bg opacity-60"
+    >
+    </div>
+    {/* radial glow */}
+    <div
+      aria-hidden="true"
+      class="absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full blur-3xl"
+      style="background: radial-gradient(circle, rgba(217,70,239,0.18) 0%, transparent 60%);"
+    >
+    </div>
+    <div
+      aria-hidden="true"
+      class="absolute -top-32 left-0 h-[420px] w-[420px] rounded-full blur-3xl"
+      style="background: radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 65%);"
+    >
+    </div>
+
+    <div class="container-x relative pt-20 pb-10 md:pt-28 md:pb-16">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
+        <div class="lg:col-span-7 xl:col-span-7">
+          {/* eyebrow */}
+          <div class="flex items-center gap-3" data-reveal>
+            <span
+              class="relative flex h-1.5 w-1.5"
+              aria-hidden="true"
+            >
+              <span
+                class="absolute inset-0 inline-flex h-1.5 w-1.5 animate-ping rounded-full"
+                style="background: var(--color-signal);"
+              ></span>
+              <span
+                class="relative inline-flex h-1.5 w-1.5 rounded-full"
+                style="background: var(--color-signal);"
+              ></span>
+            </span>
+            <span class="eyebrow">
+              SigmaFi Research · Σ · HKSAR
+            </span>
+            <span class="h-px flex-1 bg-[var(--color-rule-ink)]"></span>
+          </div>
+
+          <h1
+            class="display mt-8 text-display-2xl"
+            data-reveal
+            style="animation-delay: 80ms;"
+          >
+            Engineering edge
+            <br />
+            across every
+            <br />
+            <span class="relative">
+              liquid market.
+              <span
+                class="absolute -bottom-2 left-0 h-[3px] w-[6.5ch]"
+                style="background: linear-gradient(90deg, var(--color-signal), var(--color-signal-3));"
+                aria-hidden="true"
+              ></span>
+            </span>
+          </h1>
+
+          <p
+            class="mt-8 max-w-xl text-lg leading-relaxed text-[var(--color-bone-dim)]"
+            data-reveal
+            style="animation-delay: 160ms;"
+          >
+            SigmaFi is a technology-driven quantitative trading firm. Founded by
+            former Jane Street traders, Getco low-latency engineers and Google
+            systems builders — we trade ETFs, equities, options, futures, fixed
+            income and prediction markets from Hong Kong.
+          </p>
+
+          <div
+            class="mt-10 flex flex-wrap items-center gap-3"
+            data-reveal
+            style="animation-delay: 240ms;"
+          >
+            <a
+              href={localizePath("/technology", lang)}
+              class="group inline-flex items-center gap-3 rounded-full px-5 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-ink)] transition-all"
+              style="background: linear-gradient(135deg, var(--color-signal), var(--color-signal-2));"
+            >
+              Explore the platform
+              <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+            </a>
+            <a
+              href={localizePath("/research", lang)}
+              class="inline-flex items-center gap-3 rounded-full border border-[var(--color-rule-ink)] px-5 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+            >
+              View research approach
+            </a>
+          </div>
+
+          {/* quick stats */}
+          <dl
+            class="mt-14 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-4"
+            data-reveal
+            style="animation-delay: 320ms;"
+          >
+            {
+              [
+                { k: "5+", v: "Asset classes" },
+                { k: "24/5", v: "Markets desk" },
+                { k: "<200μs", v: "Internal tick-to-trade" },
+                { k: "Σ", v: "Self-improving research" },
+              ].map((s) => (
+                <div class="border-l border-[var(--color-rule-ink)] pl-4">
+                  <dt class="font-display text-2xl font-medium text-[var(--color-bone)]">
+                    {s.k}
+                  </dt>
+                  <dd class="mt-1 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">
+                    {s.v}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        <div
+          class="lg:col-span-5 xl:col-span-5"
+          data-reveal
+          style="animation-delay: 200ms;"
+        >
+          <div
+            class="relative rounded-2xl border border-[var(--color-rule-ink)] bg-[color:color-mix(in_oklab,_var(--color-ink-2)_85%,_transparent)] p-3 backdrop-blur-sm"
+          >
+            {/* chart head */}
+            <div class="flex items-center justify-between border-b border-[var(--color-rule-ink)] px-3 py-2.5">
+              <div class="flex items-center gap-2">
+                <span class="h-2 w-2 rounded-full" style="background: var(--color-down);"></span>
+                <span class="h-2 w-2 rounded-full" style="background: #c8b86a;"></span>
+                <span class="h-2 w-2 rounded-full" style="background: var(--color-up);"></span>
+                <span class="ml-3 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">
+                  cws://research/composite.signal
+                </span>
+              </div>
+              <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-up)]">
+                ● live
+              </span>
+            </div>
+
+            {/* the chart */}
+            <div class="px-2 py-2">
+              <SignalChart points={84} lines={3} seed={11} caption="Composite signal — illustrative" />
+            </div>
+
+            {/* legend */}
+            <div class="grid grid-cols-3 gap-2 border-t border-[var(--color-rule-ink)] px-3 py-3 font-mono text-[10px] tracking-[0.16em] uppercase">
+              <div class="flex items-center gap-2 text-[var(--color-bone-dim)]">
+                <span class="h-0.5 w-4" style="background: #d946ef;"></span>
+                S-1 · stat-arb
+              </div>
+              <div class="flex items-center gap-2 text-[var(--color-bone-dim)]">
+                <span class="h-0.5 w-4" style="background: #a855f7;"></span>
+                S-2 · momentum
+              </div>
+              <div class="flex items-center gap-2 text-[var(--color-bone-dim)]">
+                <span class="h-0.5 w-4" style="background: #7c3aed;"></span>
+                S-3 · vol-arb
+              </div>
+            </div>
+          </div>
+
+          {/* sub callout */}
+          <p class="mt-4 font-mono text-[10px] leading-relaxed tracking-[0.14em] uppercase text-[var(--color-muted-ink)]">
+            * Composite illustration of stylised research signals. Not an offer,
+            recommendation, or claim of past performance.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <TickerBar />
+  </section>
+
+  {/* ============ APPROACH ============ */}
+  <section class="container-x py-24 md:py-32" id="approach">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow" data-reveal>§ 01 — Approach</p>
+        <h2
+          class="display mt-4 text-display-lg text-[var(--color-bone)]"
+          data-reveal
+        >
+          Five strategy pillars,
+          <span class="text-[var(--color-signal-hi)]">one shared substrate.</span>
+        </h2>
+        <p
+          class="mt-6 max-w-md text-[var(--color-bone-dim)] leading-relaxed"
+          data-reveal
+        >
+          Our research blends ideas refined at the world's top quantitative
+          firms with a modern ML stack and a self-improving development engine
+          we call CWS. Every strategy ships through the same risk, execution and
+          monitoring substrate.
+        </p>
+      </div>
+
+      <ol class="lg:col-span-7 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-2">
+        {
+          pillars.map((p, i) => (
+            <li
+              class="group relative bg-[var(--color-ink-2)] p-6 transition-colors hover:bg-[var(--color-ink-3)]"
+              data-reveal
+              style={`animation-delay: ${80 * i}ms`}
+            >
+              <div class="flex items-baseline justify-between">
+                <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-muted-ink)]">
+                  {p.code}
+                </span>
+                <span
+                  class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)] opacity-0 transition-opacity group-hover:opacity-100"
+                  aria-hidden="true"
+                >
+                  ↗
+                </span>
+              </div>
+              <h3 class="mt-3 font-display text-xl font-medium text-[var(--color-bone)]">
+                {p.title}
+              </h3>
+              <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">
+                {p.body}
+              </p>
+            </li>
+          ))
+        }
+        <li class="bg-[var(--color-ink-2)] p-6 flex flex-col justify-between">
+          <p class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-muted-ink)]">+ N</p>
+          <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">
+            New strategy hypotheses graduate from the research pipeline weekly —
+            every promising signal is paper-traded, stress-tested, and only then
+            promoted to production.
+          </p>
+          <a
+            href={localizePath("/research", lang)}
+            class="mt-6 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-[var(--color-signal-hi)] hover:text-[var(--color-signal)]"
+          >
+            View research →
+          </a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  {/* ============ CWS PLATFORM ============ */}
+  <section class="relative isolate overflow-hidden border-y border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 grid-bg opacity-40"
+    ></div>
+    <div
+      aria-hidden="true"
+      class="absolute -top-32 right-0 h-[500px] w-[500px] rounded-full blur-3xl"
+      style="background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 60%);"
+    ></div>
+
+    <div class="container-x relative py-24 md:py-32">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-5">
+          <p class="eyebrow" data-reveal>§ 02 — Platform</p>
+          <h2 class="display mt-4 text-display-lg" data-reveal>
+            CWS — a research engine
+            <span class="text-[var(--color-signal-hi)]">that writes itself.</span>
+          </h2>
+          <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+            Coding Workflow System turns research into a continuously
+            self-improving loop. Large language models propose, test and refine
+            trading strategies through a harness-engineered pipeline; the same
+            strategy graph is replayed across markets and asset classes.
+          </p>
+
+          <ul class="mt-10 space-y-7">
+            {
+              [
+                {
+                  k: "AI coding & strategy generation",
+                  v:
+                    "Harness-engineered LLM agents author signals, run backtests, and iterate — compressing weeks of quant grunt-work into hours.",
+                },
+                {
+                  k: "Data ETL & elastic compute",
+                  v:
+                    "Petabyte-scale market and alt-data pipelines, GPU/CPU cluster scheduling, deterministic backtest reproducibility.",
+                },
+                {
+                  k: "Research pipeline & RL",
+                  v:
+                    "Papers in, alpha out. Reinforcement-learning loops, cross-sectional and time-series template strategies validated continuously across markets.",
+                },
+              ].map((row, i) => (
+                <li
+                  class="group flex gap-5 border-t border-[var(--color-rule-ink)] pt-6"
+                  data-reveal
+                  style={`animation-delay: ${80 * i}ms`}
+                >
+                  <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)] pt-1">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 class="font-display text-lg font-medium text-[var(--color-bone)]">
+                      {row.k}
+                    </h3>
+                    <p class="mt-2 text-sm leading-relaxed text-[var(--color-bone-dim)]">
+                      {row.v}
+                    </p>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        {/* terminal mock */}
+        <div class="lg:col-span-7" data-reveal style="animation-delay: 120ms;">
+          <div class="relative rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-ink)] shadow-2xl shadow-purple-950/50 overflow-hidden">
+            <div class="flex items-center justify-between border-b border-[var(--color-rule-ink)] px-4 py-3 bg-[color:color-mix(in_oklab,_var(--color-ink-3)_70%,_transparent)]">
+              <div class="flex items-center gap-2">
+                <span class="h-2.5 w-2.5 rounded-full" style="background: #ef6f6f;"></span>
+                <span class="h-2.5 w-2.5 rounded-full" style="background: #c8b86a;"></span>
+                <span class="h-2.5 w-2.5 rounded-full" style="background: #65d6a0;"></span>
+                <span class="ml-3 font-mono text-[11px] text-[var(--color-bone-dim)]">cws — research/momentum</span>
+              </div>
+              <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">σ-shell · v4.2</span>
+            </div>
+            <pre class="px-5 py-5 overflow-x-auto font-mono text-[12.5px] leading-relaxed text-[var(--color-bone)]"><span class="text-[var(--color-signal-2)]">σ ▸</span> <span class="text-[var(--color-bone-dim)]">cws propose --hypothesis "intraday momentum × news-tone"</span>
+<span class="text-[var(--color-muted-ink)]">→ 14 candidate signals generated · seeded by 132 papers</span>
+<span class="text-[var(--color-muted-ink)]">→ 3 promoted to vector backtest</span>
+
+<span class="text-[var(--color-signal-2)]">σ ▸</span> <span class="text-[var(--color-bone-dim)]">cws backtest --grid us-eq,hk-eq,jp-eq --window 5y</span>
+<span class="text-[var(--color-up)]">[OK]</span>  <span class="text-[var(--color-bone-dim)]">us-eq   ·  Sharpe 2.4   t-stat 6.1</span>
+<span class="text-[var(--color-up)]">[OK]</span>  <span class="text-[var(--color-bone-dim)]">hk-eq   ·  Sharpe 1.9   t-stat 4.8</span>
+<span class="text-[var(--color-down)]">[KO]</span>  <span class="text-[var(--color-bone-dim)]">jp-eq   ·  capacity bound — escalate</span>
+
+<span class="text-[var(--color-signal-2)]">σ ▸</span> <span class="text-[var(--color-bone-dim)]">cws stress --shock 2008,2015,2020,2022</span>
+<span class="text-[var(--color-muted-ink)]">→ drawdown profile within risk budget</span>
+<span class="text-[var(--color-muted-ink)]">→ tail-correlation w/ existing book: 0.18</span>
+
+<span class="text-[var(--color-signal-2)]">σ ▸</span> <span class="text-[var(--color-bone-dim)]">cws promote --to paper-trade --size $2.0M</span>
+<span class="text-[var(--color-up)]">→ promoted</span> <span class="text-[var(--color-bone-dim)]">· monitoring: dash/sg-1421</span>
+<span class="inline-block w-2 h-4 align-middle bg-[var(--color-signal)] animate-[blink_1s_steps(2,jump-none)_infinite]"></span></pre>
+          </div>
+
+          <div class="mt-5 grid grid-cols-3 gap-4">
+            {
+              [
+                { k: "Hypotheses / wk", v: "~120" },
+                { k: "Backtests / day", v: "~4,000" },
+                { k: "Strategies live", v: "growing" },
+              ].map((s) => (
+                <div class="rounded-lg border border-[var(--color-rule-ink)] bg-[var(--color-ink)] p-4">
+                  <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">
+                    {s.k}
+                  </p>
+                  <p class="mt-2 font-display text-xl font-medium text-[var(--color-bone)]">
+                    {s.v}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ MARKETS ============ */}
+  <section class="container-x py-24 md:py-32">
+    <div class="flex flex-col items-end justify-between gap-6 md:flex-row md:items-end">
+      <div class="max-w-xl">
+        <p class="eyebrow" data-reveal>§ 03 — Markets</p>
+        <h2 class="display mt-4 text-display-lg" data-reveal>
+          We trade
+          <span class="text-[var(--color-signal-hi)]">where conviction meets liquidity.</span>
+        </h2>
+      </div>
+      <p class="text-sm text-[var(--color-bone-dim)] max-w-sm" data-reveal>
+        Multi-asset coverage from Hong Kong as our anchor. Every venue we touch
+        is governed by the same risk substrate and the same execution stack.
+      </p>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-2">
+      {
+        markets.map((m, i) => (
+          <article
+            class="group relative bg-[var(--color-ink-2)] p-8 transition-all"
+            data-reveal
+            style={`animation-delay: ${60 * i}ms`}
+          >
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] tracking-[0.24em] uppercase text-[var(--color-signal-2)]">
+                {m.tag}
+              </span>
+              <span class="font-mono text-[10px] tracking-[0.22em] text-[var(--color-muted-ink)]">
+                .0{i + 1}
+              </span>
+            </div>
+            <h3 class="mt-6 font-display text-2xl font-medium text-[var(--color-bone)] tracking-tight">
+              {m.title}
+            </h3>
+            <p class="mt-4 max-w-md text-sm leading-relaxed text-[var(--color-bone-dim)]">
+              {m.body}
+            </p>
+            <ul class="mt-8 flex flex-wrap gap-2">
+              {m.metrics.map((mm) => (
+                <li class="rounded-full border border-[var(--color-rule-ink)] px-3 py-1 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-bone-dim)]">
+                  {mm}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  {/* ============ RISK & COMPLIANCE ============ */}
+  <section class="border-t border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-24 md:py-28">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-5">
+          <p class="eyebrow" data-reveal>§ 04 — Risk & compliance</p>
+          <h2 class="display mt-4 text-display-md" data-reveal>
+            A discipline before it is a strategy.
+          </h2>
+        </div>
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {
+            [
+              {
+                k: "Centralised risk",
+                v:
+                  "A Citadel-style central risk function: real-time exposure across strategies, books and assets — with hard limits, kill-switches and per-desk PnL isolation.",
+              },
+              {
+                k: "Global compliance",
+                v:
+                  "Type 9 (Asset Management) licence application in progress with the Hong Kong SFC. Processes built to the standards of leading global financial centres.",
+              },
+              {
+                k: "Algorithmic ethics",
+                v:
+                  "We treat market integrity as a prerequisite, not a tax. Strategy review, surveillance and venue-level controls are first-class engineering concerns.",
+              },
+              {
+                k: "Operational resilience",
+                v:
+                  "Multi-region disaster recovery, deterministic replay of every order ever sent, and independent infrastructure for compliance and audit.",
+              },
+            ].map((row, i) => (
+              <article
+                class="rounded-xl border border-[var(--color-rule-ink)] bg-[var(--color-ink)] p-6"
+                data-reveal
+                style={`animation-delay: ${80 * i}ms`}
+              >
+                <h3 class="font-display text-lg font-medium text-[var(--color-bone)]">
+                  {row.k}
+                </h3>
+                <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">
+                  {row.v}
+                </p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ TEAM TEASER ============ */}
+  <section class="container-x py-24 md:py-32">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 items-center">
+      <div class="lg:col-span-6">
+        <p class="eyebrow" data-reveal>§ 05 — People</p>
+        <h2 class="display mt-4 text-display-lg" data-reveal>
+          Built by alumni of
+          <span class="text-[var(--color-signal-hi)]">the firms that wrote the playbook.</span>
+        </h2>
+        <p class="mt-6 max-w-lg text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          Our founding team trained at Jane Street, Citadel, Getco, SIG and
+          Google, with research roots at Princeton, MIT, Berkeley, Columbia and
+          Tsinghua. We pair that lineage with a willingness to throw out
+          received wisdom whenever the data says so.
+        </p>
+        <a
+          href={localizePath("/about", lang)}
+          class="mt-8 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-[var(--color-signal-hi)] hover:text-[var(--color-signal)]"
+        >
+          About SigmaFi →
+        </a>
+      </div>
+      <div class="lg:col-span-6">
+        <ul
+          class="flex flex-wrap gap-x-3 gap-y-3"
+          data-reveal
+        >
+          {
+            teamBackgrounds.map((b) => (
+              <li class="group relative rounded-full border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] px-4 py-2 font-mono text-[11px] tracking-[0.18em] uppercase text-[var(--color-bone)] transition-colors hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)]">
+                <span aria-hidden="true" class="mr-2 text-[var(--color-signal-2)]">↳</span>
+                {b}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-6 font-mono text-[10px] leading-relaxed tracking-[0.15em] uppercase text-[var(--color-muted-ink)]">
+          Affiliations of current and former team members. Listed firms are not
+          investors in or partners of SigmaFi.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ CTA ============ */}
+  <section class="relative isolate overflow-hidden">
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 grid-bg opacity-30"
+    ></div>
+    <div
+      aria-hidden="true"
+      class="absolute -bottom-40 left-1/2 h-[700px] w-[900px] -translate-x-1/2 rounded-full blur-3xl"
+      style="background: radial-gradient(circle, rgba(217,70,239,0.22) 0%, transparent 60%);"
+    ></div>
+
+    <div class="container-x relative py-24 md:py-32">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow" data-reveal>§ 06 — Get in touch</p>
+        <h2 class="display mt-6 text-display-xl" data-reveal>
+          Liquidity is engineered.
+          <br />
+          <span class="text-[var(--color-signal-hi)]">Let's engineer some.</span>
+        </h2>
+        <p
+          class="mt-6 text-[var(--color-bone-dim)] leading-relaxed"
+          data-reveal
+        >
+          For trading partnerships, capital introductions, and engineering
+          recruiting — reach the team directly.
+        </p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-3" data-reveal>
+          <a
+            href={localizePath("/contact", lang)}
+            class="group inline-flex items-center gap-3 rounded-full px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-ink)]"
+            style="background: linear-gradient(135deg, var(--color-signal), var(--color-signal-2));"
+          >
+            Contact the desk
+            <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+          </a>
+          <a
+            href={localizePath("/careers", lang)}
+            class="inline-flex items-center gap-3 rounded-full border border-[var(--color-rule-ink)] px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+          >
+            Join the team
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

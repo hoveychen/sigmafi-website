@@ -1,0 +1,209 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PageHero from "~/components/PageHero.astro";
+import { localizePath } from "~/i18n/ui";
+
+const lang = "zh" as const;
+
+const principles = [
+  {
+    t: "工程在叙事之前",
+    p: "如果一个论断扛不过被工程进代码这一步，那它就不是策略，而只是故事。我们付工资给研究员，但发布的是工程师的成品。",
+  },
+  {
+    t: "让基座复利",
+    p: "策略会衰减。基座会复利。我们最有价值的资产是那条让下一个策略比上一个更快诞生的回路。",
+  },
+  {
+    t: "对自己的 edge 诚实",
+    p: "容量、滑点、衰减、市场状态——我们度量它们，并告诉自己真相。对自身 edge 的诚实，是最便宜的 edge 来源。",
+  },
+  {
+    t: "纪律在规模之前",
+    p: "风险不是为了做大要交的税，而是先决条件。我们宁愿账本平静地慢慢长，也不要追逐头条 AUM。",
+  },
+];
+
+const timeline = [
+  {
+    year: "起点",
+    body: "创始团队在 Jane Street、Citadel、Getco、Google 相遇。共同的不爽：想法到处都是，但从想法到生产订单的那条回路是断的。",
+  },
+  {
+    year: "第一阶段",
+    body: "私下打磨 CWS。把加密做市当作实验场——7×24、监管轻量、反馈极快。我们先在自有资金上跑通这条回路。",
+  },
+  {
+    year: "第二阶段",
+    body: "把策略延伸到 ETF、期权、期货、利率。设立香港办公室，启动 SFC 9 号（资产管理）牌照申请。",
+  },
+  {
+    year: "第三阶段",
+    body: "把 CWS 推向预测市场。继续投资研究、基础设施，以及让这两件事成为可能的人。",
+  },
+];
+
+const teamBackgrounds = [
+  "Jane Street",
+  "Citadel",
+  "Getco",
+  "Google",
+  "SIG",
+  "Two Sigma",
+  "DRW",
+  "普林斯顿",
+  "麻省理工",
+  "伯克利",
+  "清华",
+  "哥伦比亚",
+];
+---
+
+<BaseLayout
+  title="关于"
+  description="在香港落子，在全球出手。SigmaFi Research 的故事、原则与人。"
+>
+  <PageHero
+    eyebrow="§ 关于"
+    meta="故事 · 原则 · 团队"
+    title={"在香港落子。<br/><span class=\"text-[var(--color-signal-hi)]\">在全球出手。</span>"}
+    subtitle="SigmaFi 是一家技术驱动的量化交易公司。我们从加密高频做市起家——在速度与纪律最被放大的市场上证明自己；今天，同一套方法被搬到 ETF、股票、期权、期货与预测市场之上。香港是我们的锚点，世界是我们的执行域。"
+  />
+
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow" data-reveal>§ 01 — 故事</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          四个章节，
+          <span class="text-[var(--color-signal-hi)]">一条不断的回路。</span>
+        </h2>
+      </div>
+      <ol class="lg:col-span-7 space-y-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)]">
+        {
+          timeline.map((t, i) => (
+            <li class="bg-[var(--color-ink-2)] p-7 grid grid-cols-1 gap-4 md:grid-cols-12 md:items-baseline" data-reveal style={`animation-delay: ${60 * i}ms`}>
+              <div class="md:col-span-3">
+                <span class="font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--color-signal-2)]">{String(i + 1).padStart(2, "0")} · {t.year}</span>
+              </div>
+              <p class="md:col-span-9 text-[var(--color-bone-dim)] leading-relaxed">{t.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="border-y border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="max-w-3xl">
+        <p class="eyebrow" data-reveal>§ 02 — 原则</p>
+        <h2 class="display mt-4 text-display-lg" data-reveal>
+          我们
+          <span class="text-[var(--color-signal-hi)]">不会交换出去的东西。</span>
+        </h2>
+      </div>
+
+      <ol class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-2">
+        {
+          principles.map((p, i) => (
+            <li class="bg-[var(--color-ink)] p-8" data-reveal style={`animation-delay: ${60 * i}ms`}>
+              <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)]">{String(i + 1).padStart(2, "0")} / 04</span>
+              <h3 class="mt-4 font-display text-2xl font-medium text-[var(--color-bone)]">{p.t}</h3>
+              <p class="mt-3 text-[var(--color-bone-dim)] leading-relaxed">{p.p}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow" data-reveal>§ 03 — 团队</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          一支
+          <span class="text-[var(--color-signal-hi)]">实战派的团队。</span>
+        </h2>
+        <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          创始团队在书写现代量化范式的那些公司——Jane Street、Citadel、Getco、SIG、
+          Two Sigma——成长，研究根基扎在普林斯顿、麻省理工、伯克利、哥伦比亚、清华。
+          共同点是：在真实市场上、真实的 PnL 之上、面对那些不会因为方案优雅就发分的对手。
+        </p>
+        <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          我们继承这条系谱，也保留——只要数据这样说——就推翻共识的勇气。
+        </p>
+      </div>
+
+      <div class="lg:col-span-7">
+        <ul class="flex flex-wrap gap-2.5" data-reveal>
+          {
+            teamBackgrounds.map((b) => (
+              <li class="rounded-full border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] px-4 py-2 font-mono text-[11px] tracking-[0.18em] uppercase text-[var(--color-bone)]">
+                <span aria-hidden="true" class="mr-2 text-[var(--color-signal-2)]">↳</span>
+                {b}
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {
+            [
+              { k: "香港", v: "锚点 · 交易台 · 研究" },
+              { k: "纽约", v: "美国上市市场联络" },
+              { k: "新加坡", v: "亚太工程 · 运营" },
+            ].map((loc, i) => (
+              <div class="rounded-xl border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] p-5" data-reveal style={`animation-delay: ${60 * i}ms`}>
+                <p class="font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--color-signal-2)]">{loc.k}</p>
+                <p class="mt-2 text-sm text-[var(--color-bone-dim)]">{loc.v}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <p class="mt-8 font-mono text-[10px] leading-relaxed tracking-[0.15em] uppercase text-[var(--color-muted-ink)]">
+          以上为当前及前任团队成员的所属机构。所列公司并非 SigmaFi 的投资人或合作方。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow" data-reveal>§ 04 — 愿景</p>
+        <h2 class="display mt-6 text-display-xl" data-reveal>
+          成为
+          <span class="text-[var(--color-signal-hi)]">最被工程</span>
+          <br/>
+          的亚洲多资产
+          <br/>
+          量化交易公司。
+        </h2>
+        <p class="mt-8 max-w-2xl mx-auto text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          对外，为对手方提供可靠、透明的流动性；对内，让研究持续复利。
+          而工程，是让这两件事都成立的那门学科。
+        </p>
+
+        <div class="mt-12 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href={localizePath("/contact", lang)}
+            class="group inline-flex items-center gap-3 rounded-full px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-ink)]"
+            style="background: linear-gradient(135deg, var(--color-signal), var(--color-signal-2));"
+          >
+            联系我们
+            <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+          </a>
+          <a
+            href={localizePath("/careers", lang)}
+            class="inline-flex items-center gap-3 rounded-full border border-[var(--color-rule-ink)] px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+          >
+            在招职位
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

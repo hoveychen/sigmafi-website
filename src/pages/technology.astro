@@ -1,0 +1,245 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PageHero from "~/components/PageHero.astro";
+import { localizePath } from "~/i18n/ui";
+
+const lang = "en" as const;
+
+const layers = [
+  {
+    code: "L4",
+    title: "Research surface",
+    body:
+      "A notebook-meets-IDE built around CWS. Researchers describe a hypothesis, the harness runs the literature scan, drafts the signal, and queues it for vector backtest.",
+    nodes: ["σ-shell", "Notebook", "Strategy DSL", "Harness agents"],
+  },
+  {
+    code: "L3",
+    title: "Compute & data plane",
+    body:
+      "Petabyte-scale market and alt-data lake, GPU + CPU clusters, deterministic backtests, capacity-aware schedulers. The same store powers research and live trading.",
+    nodes: ["Tick archive", "GPU cluster", "Replay engine", "Feature store"],
+  },
+  {
+    code: "L2",
+    title: "Execution & risk",
+    body:
+      "Kernel-bypass networking, custom exchange adapters, low-latency OMS, and an independent risk system with hard per-strategy limits and global kill-switches.",
+    nodes: ["Adapters", "OMS", "Smart order router", "Risk core"],
+  },
+  {
+    code: "L1",
+    title: "Observability & replay",
+    body:
+      "Every order ever sent is captured bit-exactly. Production traffic can be replayed against a candidate strategy in milliseconds, so we ship with confidence.",
+    nodes: ["Lineage", "Tracing", "Bit-exact replay", "Audit"],
+  },
+];
+
+const cws = [
+  {
+    h: "AI coding & strategy generation",
+    p: "Harness-engineered LLM agents read the latest literature, propose signals, write the implementation, run the unit tests and iterate. A quant year becomes a quant week.",
+  },
+  {
+    h: "ETL & elastic compute",
+    p: "Continuous extraction and normalisation across exchanges, vendors and alt-data feeds. GPU/CPU schedulers allocate capacity by deadline, not by team.",
+  },
+  {
+    h: "Research pipeline & RL",
+    p: "Reinforcement-learning loops compound returns of the meta-system itself: which signals to spend compute on, which markets deserve a re-look, when to retire a strategy.",
+  },
+];
+---
+
+<BaseLayout
+  title="Technology"
+  description="CWS — the Coding Workflow System. Harness engineering, LLMs and a low-latency trading stack, sharing the same substrate from research to production."
+>
+  <PageHero
+    eyebrow="§ Technology"
+    meta="CWS · Infrastructure · Resilience"
+    title={"A research engine<br/><span class=\"text-[var(--color-signal-hi)]\">that writes itself.</span>"}
+    subtitle="CWS — Coding Workflow System — is our four-layer stack for taking a market intuition all the way to executed orders. Every layer is engineered to compound: research feeds production, production feeds research."
+  />
+
+  {/* Thesis */}
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 items-start">
+      <div class="lg:col-span-5">
+        <p class="eyebrow" data-reveal>§ 01 — Thesis</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          The bottleneck of quant
+          <span class="text-[var(--color-signal-hi)]">is no longer ideas.</span>
+        </h2>
+      </div>
+      <div class="lg:col-span-7 grid gap-6 md:grid-cols-2">
+        <p class="text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          The constraint isn't generating hypotheses — strong researchers and
+          modern LLMs produce more than any desk can vet. The bottleneck is the
+          loop: cleanly tested, properly stressed, fairly sized, honestly
+          monitored, and gracefully retired.
+        </p>
+        <p class="text-[var(--color-bone-dim)] leading-relaxed" data-reveal style="animation-delay: 80ms;">
+          CWS treats that loop as the product. The system itself is what we
+          engineer, not the individual strategies that live on top. Strategies
+          come and go. The loop compounds.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* CWS triad */}
+  <section class="border-y border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <p class="eyebrow" data-reveal>§ 02 — CWS in three movements</p>
+      <h2 class="display mt-4 text-display-lg max-w-3xl" data-reveal>
+        Three engines.
+        <span class="text-[var(--color-signal-hi)]">One feedback loop.</span>
+      </h2>
+
+      <div class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-3">
+        {
+          cws.map((c, i) => (
+            <article class="bg-[var(--color-ink)] p-8" data-reveal style={`animation-delay: ${60 * i}ms`}>
+              <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)]">{String(i + 1).padStart(2, "0")} / 03</span>
+              <h3 class="mt-4 font-display text-2xl font-medium text-[var(--color-bone)]">{c.h}</h3>
+              <p class="mt-4 text-sm leading-relaxed text-[var(--color-bone-dim)]">{c.p}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* Architecture */}
+  <section class="container-x py-20 md:py-28">
+    <div class="max-w-3xl">
+      <p class="eyebrow" data-reveal>§ 03 — Architecture</p>
+      <h2 class="display mt-4 text-display-lg" data-reveal>
+        Four layers,
+        <span class="text-[var(--color-signal-hi)]">all bit-exactly replayable.</span>
+      </h2>
+      <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+        From a researcher typing a hypothesis to an order hitting an exchange's
+        matching engine — four layers, owned by one team, replayed end-to-end
+        every night against the day's traffic.
+      </p>
+    </div>
+
+    <ol class="mt-14 space-y-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)]">
+      {
+        layers.map((l, i) => (
+          <li
+            class="grid grid-cols-1 gap-6 bg-[var(--color-ink-2)] p-7 md:grid-cols-12 md:items-center"
+            data-reveal
+            style={`animation-delay: ${60 * i}ms`}
+          >
+            <div class="md:col-span-2 flex items-center gap-3">
+              <span class="inline-grid h-9 w-9 place-items-center rounded-lg border border-[var(--color-rule-ink)] bg-[var(--color-ink)] font-mono text-[12px] text-[var(--color-signal-hi)]">
+                {l.code}
+              </span>
+              <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">LAYER</span>
+            </div>
+            <div class="md:col-span-4">
+              <h3 class="font-display text-xl font-medium text-[var(--color-bone)]">{l.title}</h3>
+            </div>
+            <p class="md:col-span-4 text-sm leading-relaxed text-[var(--color-bone-dim)]">
+              {l.body}
+            </p>
+            <ul class="md:col-span-2 flex flex-wrap gap-1.5 md:justify-end">
+              {l.nodes.map((n) => (
+                <li class="rounded-full border border-[var(--color-rule-ink)] px-2.5 py-1 font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--color-bone-dim)]">{n}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  {/* Latency / engineering */}
+  <section class="border-y border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-5">
+          <p class="eyebrow" data-reveal>§ 04 — Engineering</p>
+          <h2 class="display mt-4 text-display-md" data-reveal>
+            Latency is a
+            <span class="text-[var(--color-signal-hi)]">design choice.</span>
+          </h2>
+          <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed max-w-md" data-reveal>
+            Our former Getco engineers designed the order path to be honest
+            about every nanosecond. We make the trade-offs explicit:
+            human-readable Rust for the slow path, hand-tuned C++ and FPGA
+            offload for the hot loop.
+          </p>
+        </div>
+
+        <div class="lg:col-span-7 grid grid-cols-2 gap-6 md:grid-cols-3">
+          {
+            [
+              { k: "Tick-to-trade", v: "< 200 μs", t: "internal hot path" },
+              { k: "OMS p99", v: "< 1.2 ms", t: "across regions" },
+              { k: "Replay throughput", v: "> 1 Tb/h", t: "bit-exact" },
+              { k: "Backtests / day", v: "~ 4,000", t: "vector + tick" },
+              { k: "Languages", v: "Rust · C++ · Py", t: "ad-hoc Mojo" },
+              { k: "Regions", v: "HKG · TYO · NYC", t: "active-active" },
+            ].map((s, i) => (
+              <div class="rounded-xl border border-[var(--color-rule-ink)] bg-[var(--color-ink)] p-5" data-reveal style={`animation-delay: ${40 * i}ms`}>
+                <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">{s.k}</p>
+                <p class="mt-3 font-display text-2xl font-medium text-[var(--color-bone)] tabular-nums">{s.v}</p>
+                <p class="mt-1 font-mono text-[10px] tracking-[0.14em] text-[var(--color-muted-ink)]">{s.t}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Resilience */}
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow" data-reveal>§ 05 — Resilience</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          Boring infrastructure.
+          <span class="text-[var(--color-signal-hi)]">Calm desks.</span>
+        </h2>
+      </div>
+      <ul class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {
+          [
+            { h: "Deterministic replay", p: "Every external interaction is captured with nanosecond timestamps. Yesterday's full trading day can be replayed against a code change in minutes." },
+            { h: "Active-active regions", p: "Hong Kong is anchor, Tokyo and New York are mirror sites. Failover is exercised weekly during low-impact windows." },
+            { h: "Independent risk", p: "Risk core runs on its own infrastructure, its own deploy cadence, its own oncall. No strategy ever bypasses it." },
+            { h: "Audit by default", p: "Order lineage, model versions, data versions and parameter values are all written to an append-only ledger." },
+          ].map((r, i) => (
+            <li class="rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] p-6" data-reveal style={`animation-delay: ${60 * i}ms`}>
+              <h3 class="font-display text-lg font-medium text-[var(--color-bone)]">{r.h}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">{r.p}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* CTA */}
+  <section class="container-x py-16 md:py-24 border-t border-[var(--color-rule-ink)]">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 items-end">
+      <h3 class="md:col-span-2 display text-display-md max-w-3xl">
+        Engineers built this.
+        <span class="text-[var(--color-signal-hi)]">Engineers should run it.</span>
+      </h3>
+      <a
+        href={localizePath("/careers", lang)}
+        class="inline-flex items-center gap-3 self-start rounded-full border border-[var(--color-rule-ink)] px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+      >
+        Open roles
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

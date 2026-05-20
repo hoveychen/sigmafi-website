@@ -1,0 +1,552 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import TickerBar from "~/components/TickerBar.astro";
+import SignalChart from "~/components/SignalChart.astro";
+import { localizePath } from "~/i18n/ui";
+
+const lang = "zh" as const;
+
+const pillars = [
+  {
+    code: "01",
+    title: "统计套利",
+    body:
+      "横截面定价关系、基于排名的多空组合，以及跨市场的快速执行——捕捉相关资产之间均值回归的微小价差。",
+  },
+  {
+    code: "02",
+    title: "跨资产动量与均值回归",
+    body:
+      "顺强势、逆透支的相对价值策略，覆盖股票、ETF、期货与数字资产，并按已实现波动率自适应调整仓位。",
+  },
+  {
+    code: "03",
+    title: "多因子组合",
+    body:
+      "围绕动量、价值、套利、低波、质量等因子构建因子库，再通过风险感知的优化器在多区域市场每日再平衡。",
+  },
+  {
+    code: "04",
+    title: "低延迟执行与跨场所套利",
+    body:
+      "自研撮合接入层、内核旁路网络与同地协议，捕捉跨交易所、跨暗池之间转瞬即逝的价差机会。",
+  },
+  {
+    code: "05",
+    title: "机器学习与另类数据",
+    body:
+      "订单流不平衡、期权偏度、新闻嵌入、链上信号——通过梯度提升与时序 Transformer 进行高维融合。",
+  },
+];
+
+const markets = [
+  {
+    tag: "股票 · ETF",
+    title: "ETF、个股与 ADR",
+    body:
+      "覆盖美国、香港、日本与泛亚各主要市场的做市与统计策略，沿用我们团队在 Jane Street 锤炼的 ETF 定价范式。",
+    metrics: ["美 · 港交 · 东证", "现货 · ADR · GDR", "持续报价"],
+  },
+  {
+    tag: "衍生品",
+    title: "期权、期货与波动率",
+    body:
+      "波动率套利、跨期与偏度交易、场内 vs OTC 错配——由机器学习驱动的隐含波动率曲面校准与风险平价配权支撑。",
+    metrics: ["3,800+ 合约", "场内 · OTC", "曲面建模"],
+  },
+  {
+    tag: "利率 · 外汇",
+    title: "固定收益与宏观",
+    body:
+      "收益率曲线、基差互换、跨货币基差与宏观利差——把 Citadel 的方法论搬到现代算力栈上重新执行。",
+    metrics: ["主权债", "IRS · OIS", "跨货币基差"],
+  },
+  {
+    tag: "数字资产 · 预测市场",
+    title: "加密资产与预测市场",
+    body:
+      "我们从加密做市起家，至今仍交易 BTC、ETH 等主流币种，并向短期信息优势丰富的预测市场延伸。",
+    metrics: ["BTC · ETH · 主流", "DEX · CEX", "预测合约"],
+  },
+];
+
+const teamBackgrounds = [
+  "Jane Street",
+  "Citadel",
+  "Getco",
+  "Google",
+  "SIG",
+  "Two Sigma",
+  "普林斯顿",
+  "麻省理工",
+  "伯克利",
+  "清华",
+  "哥伦比亚",
+];
+---
+
+<BaseLayout
+  title="SigmaFi Research"
+  description="技术驱动的多资产量化交易公司。由 Jane Street、Getco、Google 资深成员联合创建，将前沿机器学习与低延迟工程应用于 ETF、期权、期货与预测市场。"
+>
+  <section class="relative isolate overflow-hidden">
+    <div aria-hidden="true" class="absolute inset-0 grid-bg opacity-60"></div>
+    <div
+      aria-hidden="true"
+      class="absolute -top-40 -right-32 h-[640px] w-[640px] rounded-full blur-3xl"
+      style="background: radial-gradient(circle, rgba(217,70,239,0.18) 0%, transparent 60%);"
+    ></div>
+    <div
+      aria-hidden="true"
+      class="absolute -top-32 left-0 h-[420px] w-[420px] rounded-full blur-3xl"
+      style="background: radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 65%);"
+    ></div>
+
+    <div class="container-x relative pt-20 pb-10 md:pt-28 md:pb-16">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
+        <div class="lg:col-span-7">
+          <div class="flex items-center gap-3" data-reveal>
+            <span class="relative flex h-1.5 w-1.5" aria-hidden="true">
+              <span
+                class="absolute inset-0 inline-flex h-1.5 w-1.5 animate-ping rounded-full"
+                style="background: var(--color-signal);"
+              ></span>
+              <span
+                class="relative inline-flex h-1.5 w-1.5 rounded-full"
+                style="background: var(--color-signal);"
+              ></span>
+            </span>
+            <span class="eyebrow">SigmaFi Research · Σ · 香港</span>
+            <span class="h-px flex-1 bg-[var(--color-rule-ink)]"></span>
+          </div>
+
+          <h1
+            class="display mt-8 text-display-2xl"
+            data-reveal
+            style="animation-delay: 80ms;"
+          >
+            在每一个流动市场
+            <br />
+            打磨
+            <span class="relative">
+              工程优势。
+              <span
+                class="absolute -bottom-2 left-0 h-[3px] w-[4ch]"
+                style="background: linear-gradient(90deg, var(--color-signal), var(--color-signal-3));"
+                aria-hidden="true"
+              ></span>
+            </span>
+          </h1>
+
+          <p
+            class="mt-8 max-w-xl text-lg leading-relaxed text-[var(--color-bone-dim)]"
+            data-reveal
+            style="animation-delay: 160ms;"
+          >
+            SigmaFi 是一家技术驱动的量化交易公司，由曾任 Jane Street 的交易员、
+            Getco 的低延迟工程师与 Google 的系统工程师联合创办，从香港出发，
+            交易 ETF、股票、期权、期货、固定收益与预测市场。
+          </p>
+
+          <div
+            class="mt-10 flex flex-wrap items-center gap-3"
+            data-reveal
+            style="animation-delay: 240ms;"
+          >
+            <a
+              href={localizePath("/technology", lang)}
+              class="group inline-flex items-center gap-3 rounded-full px-5 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-ink)] transition-all"
+              style="background: linear-gradient(135deg, var(--color-signal), var(--color-signal-2));"
+            >
+              探索平台
+              <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+            </a>
+            <a
+              href={localizePath("/research", lang)}
+              class="inline-flex items-center gap-3 rounded-full border border-[var(--color-rule-ink)] px-5 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+            >
+              研究方法论
+            </a>
+          </div>
+
+          <dl
+            class="mt-14 grid grid-cols-2 gap-y-6 gap-x-6 sm:grid-cols-4"
+            data-reveal
+            style="animation-delay: 320ms;"
+          >
+            {
+              [
+                { k: "5+", v: "资产类别" },
+                { k: "24/5", v: "做市值守" },
+                { k: "<200μs", v: "内部 Tick-to-Trade" },
+                { k: "Σ", v: "自我迭代的研究" },
+              ].map((s) => (
+                <div class="border-l border-[var(--color-rule-ink)] pl-4">
+                  <dt class="font-display text-2xl font-medium text-[var(--color-bone)]">
+                    {s.k}
+                  </dt>
+                  <dd class="mt-1 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">
+                    {s.v}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        <div class="lg:col-span-5" data-reveal style="animation-delay: 200ms;">
+          <div class="relative rounded-2xl border border-[var(--color-rule-ink)] bg-[color:color-mix(in_oklab,_var(--color-ink-2)_85%,_transparent)] p-3 backdrop-blur-sm">
+            <div class="flex items-center justify-between border-b border-[var(--color-rule-ink)] px-3 py-2.5">
+              <div class="flex items-center gap-2">
+                <span class="h-2 w-2 rounded-full" style="background: var(--color-down);"></span>
+                <span class="h-2 w-2 rounded-full" style="background: #c8b86a;"></span>
+                <span class="h-2 w-2 rounded-full" style="background: var(--color-up);"></span>
+                <span class="ml-3 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">
+                  cws://research/composite.signal
+                </span>
+              </div>
+              <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-up)]">
+                ● 实时
+              </span>
+            </div>
+            <div class="px-2 py-2">
+              <SignalChart points={84} lines={3} seed={11} caption="综合信号 · 示意图" />
+            </div>
+            <div class="grid grid-cols-3 gap-2 border-t border-[var(--color-rule-ink)] px-3 py-3 font-mono text-[10px] tracking-[0.16em] uppercase">
+              <div class="flex items-center gap-2 text-[var(--color-bone-dim)]">
+                <span class="h-0.5 w-4" style="background: #d946ef;"></span>
+                S-1 · 统计套利
+              </div>
+              <div class="flex items-center gap-2 text-[var(--color-bone-dim)]">
+                <span class="h-0.5 w-4" style="background: #a855f7;"></span>
+                S-2 · 动量
+              </div>
+              <div class="flex items-center gap-2 text-[var(--color-bone-dim)]">
+                <span class="h-0.5 w-4" style="background: #7c3aed;"></span>
+                S-3 · 波动率
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-4 font-mono text-[10px] leading-relaxed tracking-[0.14em] uppercase text-[var(--color-muted-ink)]">
+            * 综合信号示意图，仅作美术呈现，不构成任何业绩承诺或要约。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <TickerBar />
+  </section>
+
+  <section class="container-x py-24 md:py-32" id="approach">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow" data-reveal>§ 01 — 方法</p>
+        <h2 class="display mt-4 text-display-lg text-[var(--color-bone)]" data-reveal>
+          五条策略支柱，
+          <span class="text-[var(--color-signal-hi)]">同一套底层基座。</span>
+        </h2>
+        <p class="mt-6 max-w-md text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          我们的研究融合了全球顶级量化机构的方法论、现代机器学习栈，以及我们称之为
+          CWS 的自我迭代研发引擎。每一条策略，都通过同一套风险、执行、监控基座上线。
+        </p>
+      </div>
+
+      <ol class="lg:col-span-7 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-2">
+        {
+          pillars.map((p, i) => (
+            <li
+              class="group relative bg-[var(--color-ink-2)] p-6 transition-colors hover:bg-[var(--color-ink-3)]"
+              data-reveal
+              style={`animation-delay: ${80 * i}ms`}
+            >
+              <div class="flex items-baseline justify-between">
+                <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-muted-ink)]">{p.code}</span>
+                <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)] opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true">↗</span>
+              </div>
+              <h3 class="mt-3 font-display text-xl font-medium text-[var(--color-bone)]">{p.title}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">{p.body}</p>
+            </li>
+          ))
+        }
+        <li class="bg-[var(--color-ink-2)] p-6 flex flex-col justify-between">
+          <p class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-muted-ink)]">+ N</p>
+          <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">
+            研究管线每周都会孵化新的策略假设——所有有潜力的信号都先经过纸面交易、
+            压力测试，再被允许进入生产。
+          </p>
+          <a
+            href={localizePath("/research", lang)}
+            class="mt-6 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-[var(--color-signal-hi)] hover:text-[var(--color-signal)]"
+          >
+            查看研究 →
+          </a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="relative isolate overflow-hidden border-y border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div aria-hidden="true" class="absolute inset-0 grid-bg opacity-40"></div>
+    <div
+      aria-hidden="true"
+      class="absolute -top-32 right-0 h-[500px] w-[500px] rounded-full blur-3xl"
+      style="background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 60%);"
+    ></div>
+
+    <div class="container-x relative py-24 md:py-32">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-5">
+          <p class="eyebrow" data-reveal>§ 02 — 平台</p>
+          <h2 class="display mt-4 text-display-lg" data-reveal>
+            CWS —
+            <span class="text-[var(--color-signal-hi)]">会自己进化的研究引擎。</span>
+          </h2>
+          <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+            Coding Workflow System 把研究流程变成一条持续自我进化的回路。
+            大语言模型在 harness engineering 框架下生成、测试、迭代交易策略，
+            同一张策略图谱被快速重放到不同市场与资产类别上。
+          </p>
+
+          <ul class="mt-10 space-y-7">
+            {
+              [
+                {
+                  k: "AI 编码与策略生成",
+                  v: "harness 化的 LLM agent 直接撰写信号、跑回测、迭代——把数周的量化体力活压缩到数小时。",
+                },
+                {
+                  k: "数据 ETL 与弹性算力",
+                  v: "PB 级行情与另类数据管线、GPU/CPU 集群调度、回测结果可确定性复现。",
+                },
+                {
+                  k: "研究管线与强化学习",
+                  v: "论文进、alpha 出。强化学习闭环，横截面与时序模板策略在多市场持续验证。",
+                },
+              ].map((row, i) => (
+                <li
+                  class="group flex gap-5 border-t border-[var(--color-rule-ink)] pt-6"
+                  data-reveal
+                  style={`animation-delay: ${80 * i}ms`}
+                >
+                  <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)] pt-1">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 class="font-display text-lg font-medium text-[var(--color-bone)]">{row.k}</h3>
+                    <p class="mt-2 text-sm leading-relaxed text-[var(--color-bone-dim)]">{row.v}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="lg:col-span-7" data-reveal style="animation-delay: 120ms;">
+          <div class="relative rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-ink)] shadow-2xl shadow-purple-950/50 overflow-hidden">
+            <div class="flex items-center justify-between border-b border-[var(--color-rule-ink)] px-4 py-3 bg-[color:color-mix(in_oklab,_var(--color-ink-3)_70%,_transparent)]">
+              <div class="flex items-center gap-2">
+                <span class="h-2.5 w-2.5 rounded-full" style="background: #ef6f6f;"></span>
+                <span class="h-2.5 w-2.5 rounded-full" style="background: #c8b86a;"></span>
+                <span class="h-2.5 w-2.5 rounded-full" style="background: #65d6a0;"></span>
+                <span class="ml-3 font-mono text-[11px] text-[var(--color-bone-dim)]">cws — research/momentum</span>
+              </div>
+              <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">σ-shell · v4.2</span>
+            </div>
+            <pre class="px-5 py-5 overflow-x-auto font-mono text-[12.5px] leading-relaxed text-[var(--color-bone)]"><span class="text-[var(--color-signal-2)]">σ ▸</span> <span class="text-[var(--color-bone-dim)]">cws propose --hypothesis "intraday momentum × news-tone"</span>
+<span class="text-[var(--color-muted-ink)]">→ 生成 14 条候选信号 · 参考 132 篇论文</span>
+<span class="text-[var(--color-muted-ink)]">→ 3 条进入向量化回测</span>
+
+<span class="text-[var(--color-signal-2)]">σ ▸</span> <span class="text-[var(--color-bone-dim)]">cws backtest --grid us-eq,hk-eq,jp-eq --window 5y</span>
+<span class="text-[var(--color-up)]">[OK]</span>  <span class="text-[var(--color-bone-dim)]">us-eq   ·  Sharpe 2.4   t-stat 6.1</span>
+<span class="text-[var(--color-up)]">[OK]</span>  <span class="text-[var(--color-bone-dim)]">hk-eq   ·  Sharpe 1.9   t-stat 4.8</span>
+<span class="text-[var(--color-down)]">[KO]</span>  <span class="text-[var(--color-bone-dim)]">jp-eq   ·  容量受限 — 上报</span>
+
+<span class="text-[var(--color-signal-2)]">σ ▸</span> <span class="text-[var(--color-bone-dim)]">cws stress --shock 2008,2015,2020,2022</span>
+<span class="text-[var(--color-muted-ink)]">→ 回撤剖面在风险预算内</span>
+<span class="text-[var(--color-muted-ink)]">→ 与现有组合尾部相关性: 0.18</span>
+
+<span class="text-[var(--color-signal-2)]">σ ▸</span> <span class="text-[var(--color-bone-dim)]">cws promote --to paper-trade --size $2.0M</span>
+<span class="text-[var(--color-up)]">→ 已上线</span> <span class="text-[var(--color-bone-dim)]">· 监控: dash/sg-1421</span>
+<span class="inline-block w-2 h-4 align-middle bg-[var(--color-signal)] animate-[blink_1s_steps(2,jump-none)_infinite]"></span></pre>
+          </div>
+
+          <div class="mt-5 grid grid-cols-3 gap-4">
+            {
+              [
+                { k: "假设 / 周", v: "约 120 条" },
+                { k: "回测 / 日", v: "约 4,000 次" },
+                { k: "在线策略", v: "持续增加" },
+              ].map((s) => (
+                <div class="rounded-lg border border-[var(--color-rule-ink)] bg-[var(--color-ink)] p-4">
+                  <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">{s.k}</p>
+                  <p class="mt-2 font-display text-xl font-medium text-[var(--color-bone)]">{s.v}</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-x py-24 md:py-32">
+    <div class="flex flex-col items-end justify-between gap-6 md:flex-row md:items-end">
+      <div class="max-w-xl">
+        <p class="eyebrow" data-reveal>§ 03 — 市场</p>
+        <h2 class="display mt-4 text-display-lg" data-reveal>
+          我们交易
+          <span class="text-[var(--color-signal-hi)]">信念与流动性交汇之处。</span>
+        </h2>
+      </div>
+      <p class="text-sm text-[var(--color-bone-dim)] max-w-sm" data-reveal>
+        从香港出发，覆盖多资产、多区域。所有接入的场所都共享同一套风险基座与执行栈。
+      </p>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-2">
+      {
+        markets.map((m, i) => (
+          <article
+            class="group relative bg-[var(--color-ink-2)] p-8 transition-all"
+            data-reveal
+            style={`animation-delay: ${60 * i}ms`}
+          >
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] tracking-[0.24em] uppercase text-[var(--color-signal-2)]">{m.tag}</span>
+              <span class="font-mono text-[10px] tracking-[0.22em] text-[var(--color-muted-ink)]">.0{i + 1}</span>
+            </div>
+            <h3 class="mt-6 font-display text-2xl font-medium text-[var(--color-bone)] tracking-tight">{m.title}</h3>
+            <p class="mt-4 max-w-md text-sm leading-relaxed text-[var(--color-bone-dim)]">{m.body}</p>
+            <ul class="mt-8 flex flex-wrap gap-2">
+              {m.metrics.map((mm) => (
+                <li class="rounded-full border border-[var(--color-rule-ink)] px-3 py-1 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-bone-dim)]">{mm}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="border-t border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-24 md:py-28">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-5">
+          <p class="eyebrow" data-reveal>§ 04 — 风险与合规</p>
+          <h2 class="display mt-4 text-display-md" data-reveal>
+            风险是一种学科，<br />而非一道流程。
+          </h2>
+        </div>
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {
+            [
+              {
+                k: "集中风险",
+                v: "类 Citadel 的集中风险架构：实时监控跨策略、跨组合、跨资产的敞口；硬性限额、紧急熔断、按团队隔离的盈亏。",
+              },
+              {
+                k: "全球合规",
+                v: "香港 SFC 9 号牌照（资产管理）申请中。流程按全球主要金融中心的监管要求建设。",
+              },
+              {
+                k: "算法伦理",
+                v: "市场公平性是前提，不是成本。策略评审、行为监控、场所级风控都是一等工程问题。",
+              },
+              {
+                k: "运营韧性",
+                v: "多区域容灾、订单生命周期可重放、合规与审计基础设施独立部署。",
+              },
+            ].map((row, i) => (
+              <article
+                class="rounded-xl border border-[var(--color-rule-ink)] bg-[var(--color-ink)] p-6"
+                data-reveal
+                style={`animation-delay: ${80 * i}ms`}
+              >
+                <h3 class="font-display text-lg font-medium text-[var(--color-bone)]">{row.k}</h3>
+                <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">{row.v}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-x py-24 md:py-32">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 items-center">
+      <div class="lg:col-span-6">
+        <p class="eyebrow" data-reveal>§ 05 — 团队</p>
+        <h2 class="display mt-4 text-display-lg" data-reveal>
+          团队来自
+          <span class="text-[var(--color-signal-hi)]">那些写下行业范式的公司。</span>
+        </h2>
+        <p class="mt-6 max-w-lg text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          我们的核心团队成长于 Jane Street、Citadel、Getco、SIG 与 Google，
+          研究根基扎在普林斯顿、麻省理工、伯克利、哥伦比亚与清华。
+          我们继承这条系谱，也始终保留——只要数据这样说——就推翻共识的勇气。
+        </p>
+        <a
+          href={localizePath("/about", lang)}
+          class="mt-8 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-[var(--color-signal-hi)] hover:text-[var(--color-signal)]"
+        >
+          关于 SigmaFi →
+        </a>
+      </div>
+      <div class="lg:col-span-6">
+        <ul class="flex flex-wrap gap-x-3 gap-y-3" data-reveal>
+          {
+            teamBackgrounds.map((b) => (
+              <li class="group relative rounded-full border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] px-4 py-2 font-mono text-[11px] tracking-[0.18em] uppercase text-[var(--color-bone)] transition-colors hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)]">
+                <span aria-hidden="true" class="mr-2 text-[var(--color-signal-2)]">↳</span>
+                {b}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-6 font-mono text-[10px] leading-relaxed tracking-[0.15em] uppercase text-[var(--color-muted-ink)]">
+          以上为当前及前任团队成员的所属机构。所列公司并非 SigmaFi 的投资人或合作方。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="relative isolate overflow-hidden">
+    <div aria-hidden="true" class="absolute inset-0 grid-bg opacity-30"></div>
+    <div
+      aria-hidden="true"
+      class="absolute -bottom-40 left-1/2 h-[700px] w-[900px] -translate-x-1/2 rounded-full blur-3xl"
+      style="background: radial-gradient(circle, rgba(217,70,239,0.22) 0%, transparent 60%);"
+    ></div>
+
+    <div class="container-x relative py-24 md:py-32">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow" data-reveal>§ 06 — 联系我们</p>
+        <h2 class="display mt-6 text-display-xl" data-reveal>
+          流动性是被工程出来的。
+          <br />
+          <span class="text-[var(--color-signal-hi)]">我们一起来工程。</span>
+        </h2>
+        <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          交易合作、资本对接、工程招聘——欢迎直接与我们的团队联系。
+        </p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-3" data-reveal>
+          <a
+            href={localizePath("/contact", lang)}
+            class="group inline-flex items-center gap-3 rounded-full px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-ink)]"
+            style="background: linear-gradient(135deg, var(--color-signal), var(--color-signal-2));"
+          >
+            联系我们
+            <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+          </a>
+          <a
+            href={localizePath("/careers", lang)}
+            class="inline-flex items-center gap-3 rounded-full border border-[var(--color-rule-ink)] px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+          >
+            加入团队
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

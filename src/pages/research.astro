@@ -1,0 +1,241 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PageHero from "~/components/PageHero.astro";
+import SignalChart from "~/components/SignalChart.astro";
+import { localizePath } from "~/i18n/ui";
+
+const lang = "en" as const;
+
+const pillars = [
+  {
+    code: "01",
+    title: "Statistical arbitrage & pairs",
+    body:
+      "We rank thousands of correlated instruments, build long/short books to dampen margin pressure, and execute across multiple venues — capturing the mean-reverting noise between assets that should move together.",
+    properties: [
+      "Cross-sectional",
+      "Rank-based",
+      "Multi-venue execution",
+      "Daily-to-intraday",
+    ],
+  },
+  {
+    code: "02",
+    title: "Cross-sectional momentum & reversal",
+    body:
+      "Relative-strength signals long the top decile and short the bottom. Short-horizon mean reversion captures the snap-back of recent over-extensions. Sized by realised volatility regime.",
+    properties: ["Relative value", "Vol-targeted", "Intraday + daily", "Regime-aware"],
+  },
+  {
+    code: "03",
+    title: "Multi-factor portfolios",
+    body:
+      "Momentum, value, carry, low-vol, quality — a factor library combined under a risk-aware optimiser that rebalances daily across regions and asset classes. Capacity-aware sizing keeps the book honest.",
+    properties: ["Cross-asset", "Daily rebalance", "Risk-budgeted", "Capacity-aware"],
+  },
+  {
+    code: "04",
+    title: "Cross-market arbitrage & HFT execution",
+    body:
+      "Kernel-bypass networking, custom exchange adapters and co-located gateways harvest fleeting price differentials across exchanges, dark pools and pairs of correlated derivatives.",
+    properties: ["Sub-millisecond", "Co-located", "Cross-venue", "Latency-aware"],
+  },
+  {
+    code: "05",
+    title: "Machine learning & alt data",
+    body:
+      "Gradient-boosted ensembles, transformer-style sequence models and probabilistic graphical models trained on order-flow imbalance, options skew, news embeddings and on-chain signals.",
+    properties: ["Transformers", "GBM", "Order flow", "News + on-chain"],
+  },
+];
+
+const lifecycle = [
+  { k: "Hypothesis", v: "Read, conjecture, formalise. Papers in, hypotheses out — a dedicated harness summarises and structures the literature daily." },
+  { k: "Backtest", v: "Vector-replayed against a bit-exact replica of historical microstructure. No look-ahead, no survivor bias, no rounding cheats." },
+  { k: "Stress", v: "Crisis windows — 2008, 2015, 2018 vol-spike, 2020 COVID, 2022 rates — and synthetic shocks. We size for the worst plausible week, not the median month." },
+  { k: "Paper", v: "Live data, real venues, zero risk. We compare to backtest in real-time and only graduate if the slippage profile matches expectations." },
+  { k: "Production", v: "Promoted under capacity-aware sizing, monitored by a per-strategy dashboard, with kill-switches owned by independent risk." },
+  { k: "Decommission", v: "When a strategy decays past its expected half-life, we retire it before it leaks. Discipline beats nostalgia." },
+];
+---
+
+<BaseLayout
+  title="Research"
+  description="Five strategy pillars, one self-improving research substrate. How SigmaFi turns literature, data and code into deployable alpha."
+>
+  <PageHero
+    eyebrow="§ Research"
+    meta="Approach · Strategies · Lifecycle"
+    title={"Research that<br/><span class=\"text-[var(--color-signal-hi)]\">compounds.</span>"}
+    subtitle="We treat research as a self-improving system, not a sequence of one-off bets. Hypotheses, backtests, stress tests and live monitoring all live on the same substrate — so a good idea travels from paper to production in days, not quarters."
+  />
+
+  {/* Pillars */}
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <p class="eyebrow" data-reveal>§ 01 — Strategy library</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          Five pillars,
+          <br/>
+          <span class="text-[var(--color-signal-hi)]">one shared substrate.</span>
+        </h2>
+        <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          Each pillar inherits the same data backbone, the same backtester, the
+          same risk system. We can mix, hedge and capacity-budget across them
+          because they all speak the same language.
+        </p>
+      </div>
+      <div class="lg:col-span-8 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-2">
+        {
+          pillars.map((p, i) => (
+            <article
+              class="group relative bg-[var(--color-ink-2)] p-7 transition-colors hover:bg-[var(--color-ink-3)]"
+              data-reveal
+              style={`animation-delay: ${60 * i}ms`}
+            >
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)]">{p.code}</span>
+                <span class="font-mono text-[10px] tracking-[0.22em] text-[var(--color-muted-ink)]">PILLAR</span>
+              </div>
+              <h3 class="mt-4 font-display text-xl font-medium text-[var(--color-bone)]">{p.title}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">{p.body}</p>
+              <ul class="mt-5 flex flex-wrap gap-1.5">
+                {p.properties.map((pp) => (
+                  <li class="rounded-full border border-[var(--color-rule-ink)] px-2.5 py-1 font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--color-bone-dim)]">{pp}</li>
+                ))}
+              </ul>
+            </article>
+          ))
+        }
+        <article class="bg-[var(--color-ink-2)] p-7 flex flex-col justify-between">
+          <div>
+            <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-muted-ink)]">+ N</span>
+            <h3 class="mt-4 font-display text-xl font-medium text-[var(--color-bone)]">
+              In incubation.
+            </h3>
+            <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">
+              Roughly 120 hypotheses enter the pipeline each week. Most fail —
+              that is the point. The ones that survive backtests, stress tests
+              and paper trading inform the next iteration.
+            </p>
+          </div>
+          <a
+            href={localizePath("/technology", lang)}
+            class="mt-6 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.22em] uppercase text-[var(--color-signal-hi)] hover:text-[var(--color-signal)]"
+          >
+            See the platform →
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {/* Lifecycle */}
+  <section class="border-y border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="max-w-3xl">
+        <p class="eyebrow" data-reveal>§ 02 — Research lifecycle</p>
+        <h2 class="display mt-4 text-display-lg" data-reveal>
+          Every signal passes through
+          <span class="text-[var(--color-signal-hi)]">the same six gates.</span>
+        </h2>
+        <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          No idea reaches production by intuition alone. The lifecycle below
+          codifies the bar: every strategy on our book has cleared each gate,
+          and continues to clear it on a rolling basis.
+        </p>
+      </div>
+
+      <ol class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-3">
+        {
+          lifecycle.map((s, i) => (
+            <li class="bg-[var(--color-ink)] p-7" data-reveal style={`animation-delay: ${60 * i}ms`}>
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)]">{String(i + 1).padStart(2, "0")}</span>
+                <span class="font-mono text-[10px] tracking-[0.22em] text-[var(--color-muted-ink)]">GATE</span>
+              </div>
+              <h3 class="mt-4 font-display text-xl font-medium text-[var(--color-bone)]">{s.k}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">{s.v}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* Data substrate */}
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-6">
+        <p class="eyebrow" data-reveal>§ 03 — Data substrate</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          Every signal needs
+          <span class="text-[var(--color-signal-hi)]">a clean, replayable past.</span>
+        </h2>
+        <p class="mt-6 max-w-md text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          We curate a single, deduplicated, bit-exact archive of market and
+          alternative data — from tick-level order books to filings, news,
+          options-implied surfaces and on-chain transfers. Every backtest reads
+          the same store. Every researcher works from the same ground truth.
+        </p>
+
+        <dl class="mt-10 grid grid-cols-2 gap-y-6 gap-x-8 max-w-md">
+          {
+            [
+              { k: "Tick L2/L3", v: "Order-book depth, time-and-sales" },
+              { k: "Options", v: "Implied surfaces · IV / skew / term" },
+              { k: "Fundamentals", v: "Filings · estimates · revisions" },
+              { k: "Alt data", v: "News · embeddings · on-chain" },
+              { k: "Macro", v: "Rates · curves · cross-currency" },
+              { k: "Microstructure", v: "Auction · cancels · prints" },
+            ].map((d) => (
+              <div>
+                <dt class="font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--color-signal-2)]">
+                  {d.k}
+                </dt>
+                <dd class="mt-1.5 text-sm text-[var(--color-bone-dim)]">{d.v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      <div class="lg:col-span-6" data-reveal>
+        <div class="rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] p-3">
+          <div class="flex items-center justify-between border-b border-[var(--color-rule-ink)] px-3 py-2.5">
+            <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">
+              cws://research/portfolio.composite
+            </span>
+            <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-up)]">
+              ● live
+            </span>
+          </div>
+          <div class="px-2 py-2">
+            <SignalChart points={110} lines={3} seed={29} caption="Portfolio composite — illustrative" />
+          </div>
+        </div>
+        <p class="mt-4 font-mono text-[10px] leading-relaxed tracking-[0.14em] uppercase text-[var(--color-muted-ink)]">
+          * Stylised visual. No representation of past, current or projected performance.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Closing block */}
+  <section class="container-x py-16 md:py-24 border-t border-[var(--color-rule-ink)]">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 items-end">
+      <h3 class="md:col-span-2 display text-display-md max-w-3xl">
+        Read the literature. Build the substrate.
+        <span class="text-[var(--color-signal-hi)]">Earn the alpha.</span>
+      </h3>
+      <a
+        href={localizePath("/technology", lang)}
+        class="inline-flex items-center gap-3 self-start rounded-full border border-[var(--color-rule-ink)] px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+      >
+        See the platform
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

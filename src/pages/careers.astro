@@ -1,0 +1,198 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PageHero from "~/components/PageHero.astro";
+import { localizePath } from "~/i18n/ui";
+
+const lang = "en" as const;
+
+const roles = [
+  {
+    family: "Engineering",
+    items: [
+      { t: "Low-latency systems engineer", loc: "Hong Kong", typ: "Full-time" },
+      { t: "Trading systems engineer (Rust / C++)", loc: "Hong Kong / NYC", typ: "Full-time" },
+      { t: "Research infrastructure engineer", loc: "Hong Kong / Singapore", typ: "Full-time" },
+      { t: "Data platform engineer", loc: "Singapore", typ: "Full-time" },
+    ],
+  },
+  {
+    family: "Research",
+    items: [
+      { t: "Quantitative researcher — equities", loc: "Hong Kong", typ: "Full-time" },
+      { t: "Quantitative researcher — derivatives", loc: "Hong Kong", typ: "Full-time" },
+      { t: "ML researcher — sequence models", loc: "Hong Kong / NYC", typ: "Full-time" },
+      { t: "Researcher — prediction markets", loc: "Remote APAC", typ: "Full-time" },
+    ],
+  },
+  {
+    family: "Trading & Ops",
+    items: [
+      { t: "Trader — options & volatility", loc: "Hong Kong", typ: "Full-time" },
+      { t: "Trader — equities & ETFs", loc: "Hong Kong", typ: "Full-time" },
+      { t: "Quant developer", loc: "Hong Kong", typ: "Full-time" },
+      { t: "Risk & compliance officer", loc: "Hong Kong", typ: "Full-time" },
+    ],
+  },
+];
+
+const why = [
+  {
+    t: "Small team, real ownership",
+    p: "We are deliberately small. Every engineer owns a piece of the loop end-to-end — from research notebook to production matching engine.",
+  },
+  {
+    t: "CWS as a force multiplier",
+    p: "You bring market intuition. CWS handles the literature scan, scaffolding, backtesting and stress testing. You spend your time on the questions only a human can answer.",
+  },
+  {
+    t: "Multi-asset, multi-region",
+    p: "ETFs and equities in three time zones, options and futures, fixed income, crypto and prediction markets. Your work moves between asset classes as the signal demands.",
+  },
+  {
+    t: "Compounding compensation",
+    p: "We pay competitively in cash; we pay generously in profit share. We want you here because the loop is the best one available — and because staying is its own reward.",
+  },
+];
+
+const process = [
+  { t: "Apply", p: "Send a CV and a short note on what you've shipped and what you'd like to ship next." },
+  { t: "Conversation", p: "A 30-minute call with someone on the team. We listen as much as we talk." },
+  { t: "Deep-dive", p: "Two technical conversations on systems, research or trading — depending on the role." },
+  { t: "On-site", p: "A day in the Hong Kong (or relevant) office. You meet the team. The team meets you." },
+  { t: "Decision", p: "We aim to come back within five business days, in writing, with reasons." },
+];
+---
+
+<BaseLayout
+  title="Careers"
+  description="We are deliberately small. Every engineer owns a piece of the loop end-to-end. Open roles across Hong Kong, New York and Singapore."
+>
+  <PageHero
+    eyebrow="§ Careers"
+    meta="Roles · Why us · Process"
+    title={"Engineering edge<br/><span class=\"text-[var(--color-signal-hi)]\">needs engineers.</span>"}
+    subtitle="If the difference between a paper signal and a live order excites you — not in the abstract, but the messy, instrumented, post-mortemed, hand-on-the-kill-switch way — we'd like to talk."
+  />
+
+  {/* Why us */}
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <p class="eyebrow" data-reveal>§ 01 — Why us</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          The thing
+          <span class="text-[var(--color-signal-hi)]">that compounds.</span>
+        </h2>
+        <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          The most underrated career asset in quant is the substrate you get to
+          stand on. Ours is engineered to make you better, faster, every quarter
+          you're here.
+        </p>
+      </div>
+      <ol class="lg:col-span-8 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-2">
+        {
+          why.map((w, i) => (
+            <li class="bg-[var(--color-ink-2)] p-6" data-reveal style={`animation-delay: ${60 * i}ms`}>
+              <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)]">{String(i + 1).padStart(2, "0")} / 04</span>
+              <h3 class="mt-3 font-display text-xl font-medium text-[var(--color-bone)]">{w.t}</h3>
+              <p class="mt-3 text-sm text-[var(--color-bone-dim)] leading-relaxed">{w.p}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* Open roles */}
+  <section class="border-y border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="flex flex-col items-end justify-between gap-6 md:flex-row md:items-end">
+        <div class="max-w-xl">
+          <p class="eyebrow" data-reveal>§ 02 — Open roles</p>
+          <h2 class="display mt-4 text-display-lg" data-reveal>
+            We hire deliberately.
+            <span class="text-[var(--color-signal-hi)]">And year-round.</span>
+          </h2>
+        </div>
+        <p class="text-sm text-[var(--color-bone-dim)] max-w-sm" data-reveal>
+          Don't see your role? Send us a note anyway — the bar is high, the
+          slots are flexible.
+        </p>
+      </div>
+
+      <div class="mt-14 space-y-12">
+        {
+          roles.map((family, fi) => (
+            <div data-reveal style={`animation-delay: ${60 * fi}ms`}>
+              <h3 class="font-mono text-[11px] tracking-[0.22em] uppercase text-[var(--color-signal-2)]">{family.family}</h3>
+              <ol class="mt-4 overflow-hidden rounded-2xl border border-[var(--color-rule-ink)]">
+                {
+                  family.items.map((r, i) => (
+                    <li class="group flex flex-col gap-3 border-b border-[var(--color-rule-ink)] bg-[var(--color-ink)] p-5 last:border-b-0 hover:bg-[var(--color-ink-3)] transition-colors md:flex-row md:items-center md:justify-between">
+                      <div class="flex items-baseline gap-4">
+                        <span class="font-mono text-[10px] tracking-[0.2em] text-[var(--color-muted-ink)]">.{String(i + 1).padStart(2, "0")}</span>
+                        <h4 class="font-display text-lg text-[var(--color-bone)]">{r.t}</h4>
+                      </div>
+                      <div class="flex items-center gap-3">
+                        <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-bone-dim)]">{r.loc}</span>
+                        <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">·</span>
+                        <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-bone-dim)]">{r.typ}</span>
+                        <a
+                          href={`mailto:careers@sigmafi.ai?subject=Application%20—%20${encodeURIComponent(r.t)}`}
+                          class="inline-flex items-center gap-2 rounded-full border border-[var(--color-rule-ink)] px-3 py-1.5 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+                        >
+                          Apply →
+                        </a>
+                      </div>
+                    </li>
+                  ))
+                }
+              </ol>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* Process */}
+  <section class="container-x py-20 md:py-28">
+    <div class="max-w-3xl">
+      <p class="eyebrow" data-reveal>§ 03 — Process</p>
+      <h2 class="display mt-4 text-display-lg" data-reveal>
+        Five steps,
+        <span class="text-[var(--color-signal-hi)]">two weeks.</span>
+      </h2>
+    </div>
+
+    <ol class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-5">
+      {
+        process.map((s, i) => (
+          <li class="bg-[var(--color-ink-2)] p-6" data-reveal style={`animation-delay: ${40 * i}ms`}>
+            <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)]">0{i + 1}</span>
+            <h3 class="mt-3 font-display text-lg font-medium text-[var(--color-bone)]">{s.t}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">{s.p}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  {/* CTA */}
+  <section class="container-x py-16 md:py-24 border-t border-[var(--color-rule-ink)]">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 items-end">
+      <h3 class="md:col-span-2 display text-display-md max-w-3xl">
+        Bring a portfolio of shipped systems.
+        <span class="text-[var(--color-signal-hi)]">Bring an appetite for the next one.</span>
+      </h3>
+      <a
+        href="mailto:careers@sigmafi.ai"
+        class="inline-flex items-center gap-3 self-start rounded-full px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-ink)]"
+        style="background: linear-gradient(135deg, var(--color-signal), var(--color-signal-2));"
+      >
+        careers@sigmafi.ai
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

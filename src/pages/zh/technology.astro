@@ -1,0 +1,229 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PageHero from "~/components/PageHero.astro";
+import { localizePath } from "~/i18n/ui";
+
+const lang = "zh" as const;
+
+const layers = [
+  {
+    code: "L4",
+    title: "研究界面",
+    body:
+      "围绕 CWS 构建的 notebook + IDE。研究员描述一个假设，harness 自动扫描文献、起草信号、排入向量化回测队列。",
+    nodes: ["σ-shell", "Notebook", "策略 DSL", "Harness agent"],
+  },
+  {
+    code: "L3",
+    title: "计算与数据平面",
+    body:
+      "PB 级行情与另类数据湖、GPU + CPU 集群、确定性回测、容量感知调度。同一份存储同时支撑研究与实盘。",
+    nodes: ["Tick 归档", "GPU 集群", "Replay 引擎", "Feature store"],
+  },
+  {
+    code: "L2",
+    title: "执行与风险",
+    body:
+      "内核旁路网络、自研交易所接入层、低延迟 OMS，以及一个独立运行的风险系统——按策略硬限额、全局熔断都在它手上。",
+    nodes: ["Adapter", "OMS", "智能路由", "风险核心"],
+  },
+  {
+    code: "L1",
+    title: "可观测与重放",
+    body:
+      "所有外部交互按比特捕获。昨天整天的真实流量，可以在数分钟内对候选策略重放——我们因此敢上线。",
+    nodes: ["Lineage", "Tracing", "比特级重放", "Audit"],
+  },
+];
+
+const cws = [
+  {
+    h: "AI 编码与策略生成",
+    p: "harness 化的 LLM agent 阅读最新文献、生成信号、写实现、跑单测、迭代。一年的量化体力活，被压缩成一周。",
+  },
+  {
+    h: "ETL 与弹性算力",
+    p: "对接交易所、数据厂商、另类数据源的持续抽取与归一化。GPU/CPU 调度按截止日期分配算力，而不是按团队。",
+  },
+  {
+    h: "研究管线与强化学习",
+    p: "强化学习不仅作用于策略，也作用于元系统自身：算力花在哪、哪个市场值得重审、哪条策略该退役。",
+  },
+];
+---
+
+<BaseLayout
+  title="技术"
+  description="CWS — Coding Workflow System。把 harness engineering、大语言模型与低延迟交易栈，从研究一路收敛到生产。"
+>
+  <PageHero
+    eyebrow="§ 技术"
+    meta="CWS · 基础设施 · 韧性"
+    title={"会自己进化的<br/><span class=\"text-[var(--color-signal-hi)]\">研究引擎。</span>"}
+    subtitle="CWS——Coding Workflow System——是我们的四层栈，从市场直觉一路走到成交订单。每一层都为复利而设计：研究反哺生产，生产反哺研究。"
+  />
+
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 items-start">
+      <div class="lg:col-span-5">
+        <p class="eyebrow" data-reveal>§ 01 — 论点</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          量化的瓶颈，
+          <span class="text-[var(--color-signal-hi)]">不再是想法。</span>
+        </h2>
+      </div>
+      <div class="lg:col-span-7 grid gap-6 md:grid-cols-2">
+        <p class="text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          约束并不在于"想出假设"——好研究员加现代大语言模型，每天产出的假设远超任何团队的审阅能力。
+          真正的瓶颈在那条闭环：干净的测试、合理的压力、公平的仓位、诚实的监控、优雅的退役。
+        </p>
+        <p class="text-[var(--color-bone-dim)] leading-relaxed" data-reveal style="animation-delay: 80ms;">
+          CWS 把这条闭环当作产品。我们工程的对象是这个系统本身，而不是上面跑的具体策略。
+          策略来来去去，闭环却在持续复利。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <p class="eyebrow" data-reveal>§ 02 — CWS 的三重奏</p>
+      <h2 class="display mt-4 text-display-lg max-w-3xl" data-reveal>
+        三个引擎，
+        <span class="text-[var(--color-signal-hi)]">一条反馈回路。</span>
+      </h2>
+
+      <div class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-3">
+        {
+          cws.map((c, i) => (
+            <article class="bg-[var(--color-ink)] p-8" data-reveal style={`animation-delay: ${60 * i}ms`}>
+              <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)]">{String(i + 1).padStart(2, "0")} / 03</span>
+              <h3 class="mt-4 font-display text-2xl font-medium text-[var(--color-bone)]">{c.h}</h3>
+              <p class="mt-4 text-sm leading-relaxed text-[var(--color-bone-dim)]">{c.p}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="container-x py-20 md:py-28">
+    <div class="max-w-3xl">
+      <p class="eyebrow" data-reveal>§ 03 — 架构</p>
+      <h2 class="display mt-4 text-display-lg" data-reveal>
+        四层架构，
+        <span class="text-[var(--color-signal-hi)]">全部可比特级重放。</span>
+      </h2>
+      <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+        从研究员敲下一个假设，到一笔订单到达交易所撮合引擎——四层架构，
+        由同一支团队拥有，每晚都对当日真实流量进行端到端重放。
+      </p>
+    </div>
+
+    <ol class="mt-14 space-y-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)]">
+      {
+        layers.map((l, i) => (
+          <li
+            class="grid grid-cols-1 gap-6 bg-[var(--color-ink-2)] p-7 md:grid-cols-12 md:items-center"
+            data-reveal
+            style={`animation-delay: ${60 * i}ms`}
+          >
+            <div class="md:col-span-2 flex items-center gap-3">
+              <span class="inline-grid h-9 w-9 place-items-center rounded-lg border border-[var(--color-rule-ink)] bg-[var(--color-ink)] font-mono text-[12px] text-[var(--color-signal-hi)]">{l.code}</span>
+              <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">LAYER</span>
+            </div>
+            <div class="md:col-span-4">
+              <h3 class="font-display text-xl font-medium text-[var(--color-bone)]">{l.title}</h3>
+            </div>
+            <p class="md:col-span-4 text-sm leading-relaxed text-[var(--color-bone-dim)]">{l.body}</p>
+            <ul class="md:col-span-2 flex flex-wrap gap-1.5 md:justify-end">
+              {l.nodes.map((n) => (
+                <li class="rounded-full border border-[var(--color-rule-ink)] px-2.5 py-1 font-mono text-[10px] tracking-[0.16em] uppercase text-[var(--color-bone-dim)]">{n}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="border-y border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-5">
+          <p class="eyebrow" data-reveal>§ 04 — 工程</p>
+          <h2 class="display mt-4 text-display-md" data-reveal>
+            延迟是
+            <span class="text-[var(--color-signal-hi)]">一项设计选择。</span>
+          </h2>
+          <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed max-w-md" data-reveal>
+            我们曾在 Getco 的工程师把订单路径的每一纳秒都摆在台面上。
+            慢路径用可读的 Rust，热路径用手调的 C++，再叠 FPGA offload——每一道权衡都是显式的。
+          </p>
+        </div>
+
+        <div class="lg:col-span-7 grid grid-cols-2 gap-6 md:grid-cols-3">
+          {
+            [
+              { k: "Tick-to-Trade", v: "< 200 μs", t: "内部热路径" },
+              { k: "OMS p99", v: "< 1.2 ms", t: "跨区域" },
+              { k: "Replay 吞吐", v: "> 1 Tb/h", t: "比特级" },
+              { k: "回测 / 日", v: "约 4,000 次", t: "向量 + tick" },
+              { k: "语言", v: "Rust · C++ · Py", t: "局部 Mojo" },
+              { k: "区域", v: "HKG · TYO · NYC", t: "Active-active" },
+            ].map((s, i) => (
+              <div class="rounded-xl border border-[var(--color-rule-ink)] bg-[var(--color-ink)] p-5" data-reveal style={`animation-delay: ${40 * i}ms`}>
+                <p class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">{s.k}</p>
+                <p class="mt-3 font-display text-2xl font-medium text-[var(--color-bone)] tabular-nums">{s.v}</p>
+                <p class="mt-1 font-mono text-[10px] tracking-[0.14em] text-[var(--color-muted-ink)]">{s.t}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow" data-reveal>§ 05 — 韧性</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          无聊的基础设施，
+          <span class="text-[var(--color-signal-hi)]">平静的交易台。</span>
+        </h2>
+      </div>
+      <ul class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {
+          [
+            { h: "确定性重放", p: "所有外部交互都按纳秒时戳完整捕获。昨天的真实交易日，可以在数分钟内对一个代码改动重放。" },
+            { h: "Active-active 多区域", p: "香港是锚点，东京与纽约是镜像。容灾切换每周在低影响窗口演练。" },
+            { h: "独立的风险", p: "风险核心跑在独立的基础设施、独立的发布节奏、独立的 oncall。任何策略都不能绕过它。" },
+            { h: "默认审计", p: "订单世系、模型版本、数据版本与参数值，全部写入只追加的账本。" },
+          ].map((r, i) => (
+            <li class="rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] p-6" data-reveal style={`animation-delay: ${60 * i}ms`}>
+              <h3 class="font-display text-lg font-medium text-[var(--color-bone)]">{r.h}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">{r.p}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="container-x py-16 md:py-24 border-t border-[var(--color-rule-ink)]">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 items-end">
+      <h3 class="md:col-span-2 display text-display-md max-w-3xl">
+        工程师把它造出来，
+        <span class="text-[var(--color-signal-hi)]">工程师也应该来跑它。</span>
+      </h3>
+      <a
+        href={localizePath("/careers", lang)}
+        class="inline-flex items-center gap-3 self-start rounded-full border border-[var(--color-rule-ink)] px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+      >
+        在招职位
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

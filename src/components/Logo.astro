@@ -1,0 +1,69 @@
+---
+interface Props {
+  variant?: "default" | "stacked";
+  size?: "sm" | "md" | "lg";
+  withWordmark?: boolean;
+}
+
+const { variant = "default", size = "md", withWordmark = true } = Astro.props;
+
+const markSize = {
+  sm: "h-6 w-6",
+  md: "h-8 w-8",
+  lg: "h-10 w-10",
+};
+
+const wordSize = {
+  sm: "text-sm",
+  md: "text-[1.05rem]",
+  lg: "text-xl",
+};
+
+const homeHref = Astro.url.pathname.startsWith("/zh") ? "/zh/" : "/";
+---
+
+<a
+  href={homeHref}
+  class:list={[
+    "group inline-flex items-center gap-2.5 font-display tracking-tight",
+    variant === "stacked" && "flex-col items-start gap-2",
+  ]}
+  aria-label="SigmaFi Research"
+>
+  <span
+    class:list={[
+      "relative inline-grid place-items-center shrink-0",
+      markSize[size],
+    ]}
+    aria-hidden="true"
+  >
+    {/* Glow halo behind the mark */}
+    <span
+      class="absolute -inset-1.5 rounded-full opacity-60 blur-md transition-opacity group-hover:opacity-90"
+      style="background: radial-gradient(circle, rgba(217,70,239,0.55) 0%, rgba(124,58,237,0.15) 55%, transparent 75%);"
+    ></span>
+    <img
+      src="/logo.png"
+      alt=""
+      width="40"
+      height="40"
+      decoding="async"
+      class:list={[
+        "relative block",
+        markSize[size],
+      ]}
+    />
+  </span>
+  {
+    withWordmark && (
+      <span class:list={["flex flex-col leading-none", wordSize[size]]}>
+        <span class="font-display font-semibold tracking-tight text-[var(--color-bone)]">SigmaFi</span>
+        {variant === "stacked" && (
+          <span class="font-mono text-[0.62em] tracking-[0.36em] text-[var(--color-bone-dim)] uppercase mt-1.5">
+            Research
+          </span>
+        )}
+      </span>
+    )
+  }
+</a>

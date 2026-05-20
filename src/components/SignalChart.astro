@@ -1,0 +1,197 @@
+---
+/**
+ * Decorative multi-signal SVG chart. NOT real performance data —
+ * pure aesthetic illustration of a composite of signals. Never carries
+ * specific PnL claims or Y-axis values that imply returns.
+ */
+interface Props {
+  /** number of points per line */
+  points?: number;
+  /** number of overlaid lines (signals) */
+  lines?: number;
+  /** override seed so it can be regenerated */
+  seed?: number;
+  /** label shown bottom-left */
+  caption?: string;
+}
+
+const {
+  points = 96,
+  lines = 3,
+  seed = 7,
+  caption = "Composite signal — illustrative",
+} = Astro.props;
+
+const W = 900;
+const H = 360;
+const PAD_X = 12;
+const PAD_Y = 24;
+
+// deterministic pseudo-random
+function lcg(s: number) {
+  let v = s;
+  return () => {
+    v = (v * 1664525 + 1013904223) % 4294967296;
+    return v / 4294967296;
+  };
+}
+
+const colors = ["#d946ef", "#a855f7", "#7c3aed"];
+const opacities = [1, 0.65, 0.45];
+const widths = [2.25, 1.5, 1.25];
+
+const series: { d: string; color: string; opacity: number; width: number; last: { x: number; y: number } }[] = [];
+
+for (let l = 0; l < lines; l++) {
+  const rand = lcg(seed * 31 + l * 17);
+  const ys: number[] = [];
+  let level = 0.5 + rand() * 0.1;
+  let momentum = 0;
+  for (let i = 0; i < points; i++) {
+    momentum = momentum * 0.78 + (rand() - 0.45) * 0.06;
+    level += momentum;
+    // gentle long-term uptrend bias
+    level += 0.0035;
+    // keep bounded
+    level = Math.max(0.18, Math.min(0.92, level));
+    ys.push(level);
+  }
+
+  const stepX = (W - PAD_X * 2) / (points - 1);
+  // smooth via simple Catmull–Rom-ish curve
+  let d = "";
+  for (let i = 0; i < points; i++) {
+    const x = PAD_X + i * stepX;
+    const y = PAD_Y + (1 - ys[i]) * (H - PAD_Y * 2);
+    if (i === 0) {
+      d += `M ${x.toFixed(2)} ${y.toFixed(2)}`;
+    } else {
+      const px = PAD_X + (i - 1) * stepX;
+      const py = PAD_Y + (1 - ys[i - 1]) * (H - PAD_Y * 2);
+      const cx = (px + x) / 2;
+      d += ` C ${cx.toFixed(2)} ${py.toFixed(2)} ${cx.toFixed(2)} ${y.toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)}`;
+    }
+  }
+  const lastX = PAD_X + (points - 1) * stepX;
+  const lastY = PAD_Y + (1 - ys[points - 1]) * (H - PAD_Y * 2);
+
+  series.push({
+    d,
+    color: colors[l] ?? colors[0],
+    opacity: opacities[l] ?? 0.4,
+    width: widths[l] ?? 1.25,
+    last: { x: lastX, y: lastY },
+  });
+}
+
+// horizontal grid lines
+const gridY = [0.2, 0.4, 0.6, 0.8].map(
+  (t) => PAD_Y + t * (H - PAD_Y * 2),
+);
+---
+
+<figure class="relative w-full">
+  <svg
+    viewBox={`0 0 ${W} ${H}`}
+    width="100%"
+    height="100%"
+    preserveAspectRatio="none"
+    role="img"
+    aria-label={caption}
+    class="block"
+  >
+    <defs>
+      <linearGradient id="curveFill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#a855f7" stop-opacity="0.22" />
+        <stop offset="1" stop-color="#a855f7" stop-opacity="0" />
+      </linearGradient>
+      <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="3" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+
+    {/* grid */}
+    {
+      gridY.map((y) => (
+        <line
+          x1={PAD_X}
+          x2={W - PAD_X}
+          y1={y}
+          y2={y}
+          stroke="var(--color-rule-ink)"
+          stroke-width="1"
+          stroke-dasharray="2 6"
+        />
+      ))
+    }
+
+    {/* fill under primary line */}
+    <path
+      d={`${series[0].d} L ${series[0].last.x} ${H - PAD_Y} L ${PAD_X} ${H - PAD_Y} Z`}
+      fill="url(#curveFill)"
+    />
+
+    {/* lines (back to front) */}
+    {
+      series
+        .slice()
+        .reverse()
+        .map((s, i) => {
+          const idx = series.length - 1 - i;
+          // estimate path length: width * points * 1.05 is a rough heuristic
+          // we'll just use a large enough dasharray
+          const len = 3200;
+          return (
+            <path
+              d={s.d}
+              fill="none"
+              stroke={s.color}
+              stroke-width={s.width}
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              opacity={s.opacity}
+              filter={idx === 0 ? "url(#softGlow)" : undefined}
+              style={`stroke-dasharray: ${len}; stroke-dashoffset: ${len}; animation: curve-draw ${1.6 + idx * 0.4}s var(--ease-soft) ${0.1 + idx * 0.15}s forwards;`}
+            />
+          );
+        })
+    }
+
+    {/* tip marker on primary */}
+    <g transform={`translate(${series[0].last.x}, ${series[0].last.y})`}>
+      <circle r="5" fill="#d946ef" opacity="0.25">
+        <animate
+          attributeName="r"
+          values="5;10;5"
+          dur="2.2s"
+          repeatCount="indefinite"
+        />
+        <animate
+          attributeName="opacity"
+          values="0.35;0;0.35"
+          dur="2.2s"
+          repeatCount="indefinite"
+        />
+      </circle>
+      <circle r="3" fill="#d946ef" />
+      <circle r="1.5" fill="#fff" />
+    </g>
+  </svg>
+
+  <figcaption class="absolute bottom-2 left-3 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">
+    {caption}
+  </figcaption>
+
+  {/* y-axis indicators (no numbers; just rungs) */}
+  <div class="pointer-events-none absolute inset-y-0 right-2 flex flex-col justify-between py-6 font-mono text-[9px] tracking-[0.15em] uppercase text-[var(--color-muted-ink)]">
+    <span>σ +3</span>
+    <span>σ +1</span>
+    <span>μ</span>
+    <span>σ −1</span>
+    <span>σ −3</span>
+  </div>
+</figure>

@@ -1,0 +1,122 @@
+---
+/**
+ * Animated ticker bar — purely illustrative, not real market data.
+ * Symbols + initial values are seeded; client-side script applies a small
+ * random walk every 1.6s so it feels live without making any factual claim.
+ */
+const symbols = [
+  { sym: "SPY", price: 452.18, asset: "ETF" },
+  { sym: "QQQ", price: 388.42, asset: "ETF" },
+  { sym: "HSI.f", price: 17284, asset: "FUT" },
+  { sym: "HK.700", price: 311.4, asset: "EQ" },
+  { sym: "ES.f", price: 4512.5, asset: "FUT" },
+  { sym: "NQ.f", price: 15783, asset: "FUT" },
+  { sym: "VIX", price: 13.24, asset: "VOL" },
+  { sym: "BTC", price: 68421, asset: "CR" },
+  { sym: "ETH", price: 3492, asset: "CR" },
+  { sym: "USDJPY", price: 152.18, asset: "FX" },
+  { sym: "GLD", price: 198.7, asset: "ETF" },
+  { sym: "10Y", price: 4.421, asset: "RT" },
+  { sym: "BABA", price: 78.92, asset: "EQ" },
+  { sym: "SOXX", price: 215.04, asset: "ETF" },
+  { sym: "EWJ", price: 56.31, asset: "ETF" },
+];
+
+// Pre-compute an initial deterministic delta seed so SSR HTML is stable.
+function seedDelta(i: number) {
+  const r = Math.sin(i * 12.9898) * 43758.5453;
+  return ((r - Math.floor(r)) - 0.5) * 1.4;
+}
+
+const items = symbols.map((s, i) => ({
+  ...s,
+  pct: Number(seedDelta(i).toFixed(2)),
+}));
+---
+
+<div
+  class="relative overflow-hidden border-y border-[var(--color-rule-ink)] bg-[color:color-mix(in_oklab,_var(--color-ink-2)_70%,_transparent)]"
+  data-ticker
+>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-y-0 left-0 z-10 w-24"
+    style="background: linear-gradient(to right, var(--color-ink), transparent);"
+  >
+  </div>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-y-0 right-0 z-10 w-24"
+    style="background: linear-gradient(to left, var(--color-ink), transparent);"
+  >
+  </div>
+
+  <div class="flex" style="animation: ticker 70s linear infinite;">
+    {/* duplicate the list twice to enable seamless infinite scroll */}
+    {
+      [0, 1].map((dup) => (
+        <ul
+          class="flex shrink-0 items-center py-2.5"
+          aria-hidden={dup === 1 ? "true" : undefined}
+          style="min-width: 100%;"
+        >
+          {items.map((it, idx) => (
+            <li
+              class="flex items-center gap-2.5 px-5 font-mono text-[12px] whitespace-nowrap"
+              data-ticker-item={dup === 0 ? `${it.sym}-${idx}` : undefined}
+            >
+              <span class="text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">
+                {it.asset}
+              </span>
+              <span class="font-medium text-[var(--color-bone)]">{it.sym}</span>
+              <span class="tabular-nums text-[var(--color-bone-dim)]" data-price>
+                {it.price.toLocaleString("en-US", {
+                  minimumFractionDigits: it.price < 100 ? 2 : 0,
+                  maximumFractionDigits: it.price < 100 ? 3 : 2,
+                })}
+              </span>
+              <span
+                class:list={[
+                  "tabular-nums",
+                  it.pct >= 0 ? "text-[var(--color-up)]" : "text-[var(--color-down)]",
+                ]}
+                data-pct
+              >
+                {it.pct >= 0 ? "▲" : "▼"} {Math.abs(it.pct).toFixed(2)}%
+              </span>
+              <span class="text-[var(--color-rule-ink)]">·</span>
+            </li>
+          ))}
+        </ul>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  // Live-ish random walk so the visible (first) copy updates.
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const items = document.querySelectorAll<HTMLElement>("[data-ticker-item]");
+    setInterval(() => {
+      items.forEach((el) => {
+        const priceEl = el.querySelector<HTMLElement>("[data-price]");
+        const pctEl = el.querySelector<HTMLElement>("[data-pct]");
+        if (!priceEl || !pctEl) return;
+        const cur = parseFloat(priceEl.textContent?.replace(/,/g, "") ?? "0");
+        const noise = (Math.random() - 0.5) * 0.0025 * cur;
+        const next = cur + noise;
+        const pct = (noise / cur) * 100 * 12;
+        const fractionDigits = cur < 100 ? 2 : 0;
+        priceEl.textContent = next.toLocaleString("en-US", {
+          minimumFractionDigits: fractionDigits,
+          maximumFractionDigits: cur < 100 ? 3 : 2,
+        });
+        const up = pct >= 0;
+        pctEl.textContent = `${up ? "▲" : "▼"} ${Math.abs(pct).toFixed(2)}%`;
+        pctEl.style.color = up
+          ? "var(--color-up)"
+          : "var(--color-down)";
+      });
+    }, 2200);
+  }
+</script>

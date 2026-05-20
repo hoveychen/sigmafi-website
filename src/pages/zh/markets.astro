@@ -1,0 +1,135 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PageHero from "~/components/PageHero.astro";
+import { localizePath } from "~/i18n/ui";
+
+const lang = "zh" as const;
+
+const assets = [
+  {
+    tag: "股票 · ETF",
+    title: "ETF、个股与 ADR",
+    summary:
+      "在美国、香港、日本与泛亚各主要市场提供做市与统计策略，沿用我们团队在 Jane Street 锤炼的 ETF 与股票方法论，用现代算力重新执行。",
+    rows: [
+      { k: "覆盖", v: "美 · 港交 · 东证 · 韩交 · 新交 · 伦交" },
+      { k: "标的", v: "ETF · 个股 · ADR · GDR" },
+      { k: "模式", v: "持续报价 · 竞价 · 扫单" },
+      { k: "风格", v: "统计套利 · 配对 · 指数套利 · 做市" },
+    ],
+    note: "亚美互挂的 ETF 申赎套利是重点方向之一。",
+  },
+  {
+    tag: "衍生品",
+    title: "期权、期货与波动率",
+    summary:
+      "覆盖场内与 OTC 衍生品。波动率套利、跨期与偏度交易、场内 vs OTC 错配——由机器学习驱动的隐含曲面校准与风险平价配权支撑。",
+    rows: [
+      { k: "覆盖", v: "指数 · 个股 · 行业 ETF" },
+      { k: "模型", v: "SVI/SSVI · 神经曲面 · 感知状态" },
+      { k: "交易", v: "跨期 · 偏度 · 分散 · 场内 vs OTC" },
+      { k: "风险", v: "希腊字母 + 路径 · 压力 · 情景账本" },
+    ],
+    note: "围绕约 3,800 个活跃合约的动态宇宙进行校准。",
+  },
+  {
+    tag: "利率 · 外汇",
+    title: "固定收益与宏观",
+    summary:
+      "收益率曲线、基差互换、跨货币基差、宏观利差——把 Citadel 风格的固收方法搬到现代算力栈上重新执行。",
+    rows: [
+      { k: "产品", v: "主权债 · IRS · OIS · 期货 · 外汇" },
+      { k: "主题", v: "曲线 · 套利 · 基差 · 跨货币" },
+      { k: "周期", v: "日内 → 多日均值回归" },
+      { k: "对冲", v: "场内期货 + 清算互换" },
+    ],
+    note: "宏观策略与跨资产组合一同纳入风险管理——不会出现孤岛式的意外。",
+  },
+  {
+    tag: "数字资产 · 预测市场",
+    title: "加密资产与预测市场",
+    summary:
+      "我们从加密做市起家。今天仍在 CEX 与 DEX 上交易 BTC、ETH 等主流币种，并向短期信息优势仍然丰富的预测市场延伸。",
+    rows: [
+      { k: "现货", v: "BTC · ETH · 主流 · 精选 alt" },
+      { k: "衍生品", v: "永续 · 期货 · 期权" },
+      { k: "场所", v: "一线 CEX · 精选 DEX · 预测市场" },
+      { k: "风格", v: "做市 · 统计套利 · 基差" },
+    ],
+    note: "加密仍然是我们的实验场：7×24 流动性、奇特的微观结构、极快的反馈。",
+  },
+];
+---
+
+<BaseLayout
+  title="市场"
+  description="以香港为锚的多资产覆盖：ETF、期权、期货、固定收益、加密与预测市场——共享同一套风险基座与执行栈。"
+>
+  <PageHero
+    eyebrow="§ 市场"
+    meta="股票 · 衍生品 · 利率 · 数字资产"
+    title={"信念与<br/><span class=\"text-[var(--color-signal-hi)]\">流动性交汇之处。</span>"}
+    subtitle="以香港为锚的多资产覆盖。所有接入的场所共享同一套风险基座与执行栈——在东京 ETF 上跑通的信号，能干净地迁移到香港期权与美国期货。"
+  />
+
+  <section class="container-x py-20 md:py-28">
+    <ol class="space-y-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)]">
+      {
+        assets.map((a, i) => (
+          <li class="bg-[var(--color-ink-2)] p-8 md:p-10" data-reveal style={`animation-delay: ${60 * i}ms`}>
+            <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+              <header class="lg:col-span-5">
+                <div class="flex items-center gap-3">
+                  <span class="font-mono text-[10px] tracking-[0.24em] uppercase text-[var(--color-signal-2)]">{a.tag}</span>
+                  <span class="h-px flex-1 bg-[var(--color-rule-ink)]" />
+                  <span class="font-mono text-[10px] tracking-[0.22em] text-[var(--color-muted-ink)]">.{String(i + 1).padStart(2, "0")}</span>
+                </div>
+                <h2 class="mt-4 font-display text-3xl font-medium text-[var(--color-bone)] tracking-tight">{a.title}</h2>
+                <p class="mt-5 max-w-lg text-[var(--color-bone-dim)] leading-relaxed">{a.summary}</p>
+                <p class="mt-6 font-mono text-[11px] leading-relaxed tracking-[0.14em] text-[var(--color-muted-ink)]">
+                  ↳ {a.note}
+                </p>
+              </header>
+
+              <div class="lg:col-span-7">
+                <dl class="grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] sm:grid-cols-2">
+                  {a.rows.map((r) => (
+                    <div class="bg-[var(--color-ink)] p-5">
+                      <dt class="font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--color-muted-ink)]">{r.k}</dt>
+                      <dd class="mt-2 text-sm text-[var(--color-bone)]">{r.v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="border-t border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 items-end">
+        <h3 class="lg:col-span-7 display text-display-lg">
+          一套执行栈，
+          <span class="text-[var(--color-signal-hi)]">所有场所说同一种语言。</span>
+        </h3>
+        <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+          <a
+            href={localizePath("/research", lang)}
+            class="rounded-full border border-[var(--color-rule-ink)] px-5 py-3 text-center font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+          >
+            研究方法 →
+          </a>
+          <a
+            href={localizePath("/technology", lang)}
+            class="rounded-full border border-[var(--color-rule-ink)] px-5 py-3 text-center font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+          >
+            CWS 平台 →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

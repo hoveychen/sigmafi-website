@@ -1,0 +1,218 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PageHero from "~/components/PageHero.astro";
+import { localizePath } from "~/i18n/ui";
+
+const lang = "en" as const;
+
+const principles = [
+  {
+    t: "Engineering before narrative",
+    p: "If a claim doesn't survive being engineered into code, it isn't a strategy — it's a story. We pay our researchers, but we ship our engineers' work.",
+  },
+  {
+    t: "Compound the substrate",
+    p: "Strategies decay. Substrates compound. The most valuable thing we build is the loop that produces the next strategy faster than the last.",
+  },
+  {
+    t: "Be honest about edge",
+    p: "Capacity, slippage, decay, regime — we measure them and we tell ourselves the truth. Honesty about your edge is the cheapest source of edge.",
+  },
+  {
+    t: "Discipline before scale",
+    p: "Risk isn't a tax we pay to grow. It's the precondition. We'd rather scale slower with a calmer book than chase headline AUM.",
+  },
+];
+
+const timeline = [
+  {
+    year: "Origin",
+    body: "Founders meet across Jane Street, Citadel, Getco and Google. The shared frustration: ideas are everywhere, the loop from idea to live order is broken.",
+  },
+  {
+    year: "Phase I",
+    body: "Build CWS in private. Crypto market making becomes the laboratory — 24/7, light regulation, fast feedback. We prove the loop on our own capital.",
+  },
+  {
+    year: "Phase II",
+    body: "Extend to ETFs, options, futures and rates. Open the Hong Kong office. Begin the SFC Type 9 (Asset Management) licence application.",
+  },
+  {
+    year: "Phase III",
+    body: "Bring CWS to bear on prediction markets. Continue investing in research, infrastructure and the people who make both possible.",
+  },
+];
+
+const teamBackgrounds = [
+  "Jane Street",
+  "Citadel",
+  "Getco",
+  "Google",
+  "SIG",
+  "Two Sigma",
+  "DRW",
+  "Princeton",
+  "MIT",
+  "Berkeley",
+  "Tsinghua",
+  "Columbia",
+];
+---
+
+<BaseLayout
+  title="About"
+  description="Built in Hong Kong, played globally. The story, the principles and the people behind SigmaFi Research."
+>
+  <PageHero
+    eyebrow="§ About"
+    meta="Story · Principles · People"
+    title={"Built in Hong Kong.<br/><span class=\"text-[var(--color-signal-hi)]\">Played globally.</span>"}
+    subtitle="SigmaFi is a technology-driven quantitative trading firm. We started as a high-frequency market maker in crypto, where speed and discipline matter most. Today we apply the same loop to ETFs, equities, options, futures and prediction markets — anchored in Hong Kong, executed across the world."
+  />
+
+  {/* Story */}
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow" data-reveal>§ 01 — Story</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          Four chapters,
+          <span class="text-[var(--color-signal-hi)]">one continuous loop.</span>
+        </h2>
+      </div>
+      <ol class="lg:col-span-7 space-y-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)]">
+        {
+          timeline.map((t, i) => (
+            <li class="bg-[var(--color-ink-2)] p-7 grid grid-cols-1 gap-4 md:grid-cols-12 md:items-baseline" data-reveal style={`animation-delay: ${60 * i}ms`}>
+              <div class="md:col-span-3">
+                <span class="font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--color-signal-2)]">{String(i + 1).padStart(2, "0")} · {t.year}</span>
+              </div>
+              <p class="md:col-span-9 text-[var(--color-bone-dim)] leading-relaxed">{t.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* Principles */}
+  <section class="border-y border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="max-w-3xl">
+        <p class="eyebrow" data-reveal>§ 02 — Principles</p>
+        <h2 class="display mt-4 text-display-lg" data-reveal>
+          What we will not
+          <span class="text-[var(--color-signal-hi)]">trade away.</span>
+        </h2>
+      </div>
+
+      <ol class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-2">
+        {
+          principles.map((p, i) => (
+            <li class="bg-[var(--color-ink)] p-8" data-reveal style={`animation-delay: ${60 * i}ms`}>
+              <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)]">{String(i + 1).padStart(2, "0")} / 04</span>
+              <h3 class="mt-4 font-display text-2xl font-medium text-[var(--color-bone)]">{p.t}</h3>
+              <p class="mt-3 text-[var(--color-bone-dim)] leading-relaxed">{p.p}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* People */}
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <p class="eyebrow" data-reveal>§ 03 — People</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          A team of
+          <span class="text-[var(--color-signal-hi)]">practitioners.</span>
+        </h2>
+        <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          Our founding team trained at the firms that wrote modern quant —
+          Jane Street, Citadel, Getco, SIG, Two Sigma — with research roots
+          at Princeton, MIT, Berkeley, Columbia and Tsinghua. The common
+          denominator: shipping into real markets, on a real PnL, against
+          counterparties who do not hand out points for elegance.
+        </p>
+        <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          We pair that lineage with a willingness to throw out received wisdom
+          — the moment the data says so.
+        </p>
+      </div>
+
+      <div class="lg:col-span-7">
+        <ul class="flex flex-wrap gap-2.5" data-reveal>
+          {
+            teamBackgrounds.map((b) => (
+              <li class="rounded-full border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] px-4 py-2 font-mono text-[11px] tracking-[0.18em] uppercase text-[var(--color-bone)]">
+                <span aria-hidden="true" class="mr-2 text-[var(--color-signal-2)]">↳</span>
+                {b}
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {
+            [
+              { k: "Hong Kong", v: "Anchor · trading desk · research" },
+              { k: "New York", v: "Listed-market liaison" },
+              { k: "Singapore", v: "APAC engineering · ops" },
+            ].map((loc, i) => (
+              <div class="rounded-xl border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] p-5" data-reveal style={`animation-delay: ${60 * i}ms`}>
+                <p class="font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--color-signal-2)]">{loc.k}</p>
+                <p class="mt-2 text-sm text-[var(--color-bone-dim)]">{loc.v}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <p class="mt-8 font-mono text-[10px] leading-relaxed tracking-[0.15em] uppercase text-[var(--color-muted-ink)]">
+          Affiliations of current and former team members. Listed firms are not
+          investors in or partners of SigmaFi.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Vision */}
+  <section class="border-t border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow" data-reveal>§ 04 — Vision</p>
+        <h2 class="display mt-6 text-display-xl" data-reveal>
+          To be the
+          <span class="text-[var(--color-signal-hi)]">most engineered</span>
+          <br/>
+          multi-asset trading firm
+          <br/>
+          out of Asia.
+        </h2>
+        <p class="mt-8 max-w-2xl mx-auto text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          Reliable, transparent liquidity for our counterparties.
+          Compounding research for ourselves. Engineering as the discipline that
+          makes both possible.
+        </p>
+
+        <div class="mt-12 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href={localizePath("/contact", lang)}
+            class="group inline-flex items-center gap-3 rounded-full px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-ink)]"
+            style="background: linear-gradient(135deg, var(--color-signal), var(--color-signal-2));"
+          >
+            Contact the desk
+            <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+          </a>
+          <a
+            href={localizePath("/careers", lang)}
+            class="inline-flex items-center gap-3 rounded-full border border-[var(--color-rule-ink)] px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+          >
+            Open roles
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

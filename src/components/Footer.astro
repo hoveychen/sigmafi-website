@@ -1,0 +1,136 @@
+---
+import Logo from "./Logo.astro";
+import { getLangFromUrl, useTranslations, localizePath } from "~/i18n/ui";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const company = [
+  { key: "footer.about", href: "/about" },
+  { key: "footer.careers", href: "/careers" },
+  { key: "footer.contact", href: "/contact" },
+] as const;
+
+const platform = [
+  { key: "footer.research", href: "/research" },
+  { key: "footer.technology", href: "/technology" },
+  { key: "footer.markets", href: "/markets" },
+] as const;
+
+const legal = [
+  { key: "footer.terms", href: "/terms" },
+  { key: "footer.privacy", href: "/privacy" },
+  { key: "footer.disclosures", href: "/disclosures" },
+] as const;
+---
+
+<footer class="relative mt-32 border-t border-[var(--color-rule-ink)] bg-[var(--color-ink)]">
+  <div class="container-x py-16 md:py-24">
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-12">
+      {/* Brand block */}
+      <div class="md:col-span-5">
+        <Logo size="lg" variant="stacked" />
+        <p class="mt-6 max-w-sm font-sans text-sm leading-relaxed text-[var(--color-bone-dim)]">
+          {t("footer.tagline")}
+        </p>
+        <p class="mt-5 font-mono text-[11px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">
+          {t("footer.regulatory")}
+        </p>
+
+        {/* Live status pill */}
+        <div class="mt-6 inline-flex items-center gap-2 rounded-full border border-[var(--color-rule-ink)] bg-[var(--color-ink-2)] px-3 py-1.5">
+          <span
+            class="relative flex h-1.5 w-1.5"
+            aria-hidden="true"
+          >
+            <span class="absolute inset-0 rounded-full bg-[var(--color-up)] animate-[blink_1.6s_steps(2,jump-none)_infinite]"></span>
+            <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-up)]"></span>
+          </span>
+          <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-bone-dim)]">
+            {lang === "zh" ? "做市系统运行中" : "Markets desk · online"}
+          </span>
+        </div>
+      </div>
+
+      {/* Link columns */}
+      <div class="md:col-span-7 grid grid-cols-2 gap-8 sm:grid-cols-3">
+        <div>
+          <h4 class="font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--color-muted-ink)]">
+            {t("footer.col.company")}
+          </h4>
+          <ul class="mt-4 space-y-2.5">
+            {
+              company.map((l) => (
+                <li>
+                  <a
+                    href={localizePath(l.href, lang)}
+                    class="font-sans text-sm text-[var(--color-bone)] hover:text-[var(--color-signal-hi)] transition-colors"
+                  >
+                    {t(l.key)}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--color-muted-ink)]">
+            {t("footer.col.platform")}
+          </h4>
+          <ul class="mt-4 space-y-2.5">
+            {
+              platform.map((l) => (
+                <li>
+                  <a
+                    href={localizePath(l.href, lang)}
+                    class="font-sans text-sm text-[var(--color-bone)] hover:text-[var(--color-signal-hi)] transition-colors"
+                  >
+                    {t(l.key)}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--color-muted-ink)]">
+            {t("footer.col.legal")}
+          </h4>
+          <ul class="mt-4 space-y-2.5">
+            {
+              legal.map((l) => (
+                <li>
+                  <span class="font-sans text-sm text-[var(--color-muted-ink)] cursor-default" title={lang === "zh" ? "即将上线" : "Coming soon"}>
+                    {t(l.key)}
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col gap-4 border-t border-[var(--color-rule-ink)] pt-8 md:flex-row md:items-center md:justify-between">
+      <p class="font-mono text-[11px] tracking-[0.14em] text-[var(--color-muted-ink)]">
+        {t("footer.copyright")}
+      </p>
+      <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">
+        Hong Kong · New York · Singapore
+      </p>
+    </div>
+  </div>
+
+  {/* Decorative wordmark */}
+  <div
+    aria-hidden="true"
+    class="container-x overflow-hidden pb-6"
+  >
+    <div
+      class="select-none font-display text-[18vw] leading-[0.85] tracking-[-0.04em] font-semibold"
+      style="background: linear-gradient(180deg, rgba(168,85,247,0.18), rgba(124,58,237,0.02)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;"
+    >
+      SIGMAFI
+    </div>
+  </div>
+</footer>

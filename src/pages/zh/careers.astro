@@ -1,0 +1,191 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PageHero from "~/components/PageHero.astro";
+import { localizePath } from "~/i18n/ui";
+
+const lang = "zh" as const;
+
+const roles = [
+  {
+    family: "工程",
+    items: [
+      { t: "低延迟系统工程师", loc: "香港", typ: "全职" },
+      { t: "交易系统工程师（Rust / C++）", loc: "香港 / 纽约", typ: "全职" },
+      { t: "研究基础设施工程师", loc: "香港 / 新加坡", typ: "全职" },
+      { t: "数据平台工程师", loc: "新加坡", typ: "全职" },
+    ],
+  },
+  {
+    family: "研究",
+    items: [
+      { t: "量化研究员 — 股票", loc: "香港", typ: "全职" },
+      { t: "量化研究员 — 衍生品", loc: "香港", typ: "全职" },
+      { t: "ML 研究员 — 时序模型", loc: "香港 / 纽约", typ: "全职" },
+      { t: "研究员 — 预测市场", loc: "亚太远程", typ: "全职" },
+    ],
+  },
+  {
+    family: "交易与运营",
+    items: [
+      { t: "交易员 — 期权与波动率", loc: "香港", typ: "全职" },
+      { t: "交易员 — 股票与 ETF", loc: "香港", typ: "全职" },
+      { t: "Quant 开发", loc: "香港", typ: "全职" },
+      { t: "风控与合规官", loc: "香港", typ: "全职" },
+    ],
+  },
+];
+
+const why = [
+  {
+    t: "小团队，真所有权",
+    p: "我们刻意保持小。每位工程师都拥有那条回路上的一段——从研究 notebook 一直到生产撮合。",
+  },
+  {
+    t: "CWS 作为放大器",
+    p: "你带来市场直觉。CWS 包办文献扫描、脚手架、回测、压力测试——把你解放出来，专注那些只有人才能回答的问题。",
+  },
+  {
+    t: "多资产，多区域",
+    p: "ETF、股票横跨三个时区，期权、期货、固定收益、加密、预测市场。你的工作随信号在资产类别之间移动。",
+  },
+  {
+    t: "可复利的回报",
+    p: "现金薪资具有竞争力；利润分成出手大方。希望你留下，是因为这条回路是当前最好的——也因为留下本身就是回报。",
+  },
+];
+
+const process = [
+  { t: "投递", p: "发一份简历，附一段简短自述：你交付过什么、下一步想交付什么。" },
+  { t: "电话沟通", p: "与团队成员一对一聊 30 分钟。我们听得和说得一样多。" },
+  { t: "技术深谈", p: "围绕系统、研究或交易的两次技术对话——视职位而定。" },
+  { t: "现场", p: "在香港（或目标）办公室待一天。你认识团队，团队也认识你。" },
+  { t: "决策", p: "我们的目标是在五个工作日内给出书面答复，并附上理由。" },
+];
+---
+
+<BaseLayout
+  title="招聘"
+  description="我们刻意保持小。每位工程师都拥有那条回路上的一段。香港、纽约、新加坡常年招募。"
+>
+  <PageHero
+    eyebrow="§ 招聘"
+    meta="职位 · 为什么是我们 · 流程"
+    title={"工程化的优势<br/><span class=\"text-[var(--color-signal-hi)]\">需要工程师。</span>"}
+    subtitle="如果你着迷于纸面信号与生产订单之间的那段距离——不是抽象意义上的，而是带着 instrument、复盘、手放在熔断按钮上的那种——我们想聊聊。"
+  />
+
+  <section class="container-x py-20 md:py-28">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <p class="eyebrow" data-reveal>§ 01 — 为什么是我们</p>
+        <h2 class="display mt-4 text-display-md" data-reveal>
+          那个
+          <span class="text-[var(--color-signal-hi)]">能复利的东西。</span>
+        </h2>
+        <p class="mt-6 text-[var(--color-bone-dim)] leading-relaxed" data-reveal>
+          量化职业里被低估的资产，是你脚下站的那块基座。我们的基座为让你每个季度都变得更好、更快而设计。
+        </p>
+      </div>
+      <ol class="lg:col-span-8 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-2">
+        {
+          why.map((w, i) => (
+            <li class="bg-[var(--color-ink-2)] p-6" data-reveal style={`animation-delay: ${60 * i}ms`}>
+              <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)]">{String(i + 1).padStart(2, "0")} / 04</span>
+              <h3 class="mt-3 font-display text-xl font-medium text-[var(--color-bone)]">{w.t}</h3>
+              <p class="mt-3 text-sm text-[var(--color-bone-dim)] leading-relaxed">{w.p}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="border-y border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="flex flex-col items-end justify-between gap-6 md:flex-row md:items-end">
+        <div class="max-w-xl">
+          <p class="eyebrow" data-reveal>§ 02 — 在招职位</p>
+          <h2 class="display mt-4 text-display-lg" data-reveal>
+            谨慎招人，
+            <span class="text-[var(--color-signal-hi)]">但全年开放。</span>
+          </h2>
+        </div>
+        <p class="text-sm text-[var(--color-bone-dim)] max-w-sm" data-reveal>
+          没看到对口职位？依然欢迎投递——门槛很高，岗位可灵活。
+        </p>
+      </div>
+
+      <div class="mt-14 space-y-12">
+        {
+          roles.map((family, fi) => (
+            <div data-reveal style={`animation-delay: ${60 * fi}ms`}>
+              <h3 class="font-mono text-[11px] tracking-[0.22em] uppercase text-[var(--color-signal-2)]">{family.family}</h3>
+              <ol class="mt-4 overflow-hidden rounded-2xl border border-[var(--color-rule-ink)]">
+                {
+                  family.items.map((r, i) => (
+                    <li class="group flex flex-col gap-3 border-b border-[var(--color-rule-ink)] bg-[var(--color-ink)] p-5 last:border-b-0 hover:bg-[var(--color-ink-3)] transition-colors md:flex-row md:items-center md:justify-between">
+                      <div class="flex items-baseline gap-4">
+                        <span class="font-mono text-[10px] tracking-[0.2em] text-[var(--color-muted-ink)]">.{String(i + 1).padStart(2, "0")}</span>
+                        <h4 class="font-display text-lg text-[var(--color-bone)]">{r.t}</h4>
+                      </div>
+                      <div class="flex items-center gap-3">
+                        <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-bone-dim)]">{r.loc}</span>
+                        <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-muted-ink)]">·</span>
+                        <span class="font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-bone-dim)]">{r.typ}</span>
+                        <a
+                          href={`mailto:careers@sigmafi.ai?subject=申请%20—%20${encodeURIComponent(r.t)}`}
+                          class="inline-flex items-center gap-2 rounded-full border border-[var(--color-rule-ink)] px-3 py-1.5 font-mono text-[10px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+                        >
+                          投递 →
+                        </a>
+                      </div>
+                    </li>
+                  ))
+                }
+              </ol>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="container-x py-20 md:py-28">
+    <div class="max-w-3xl">
+      <p class="eyebrow" data-reveal>§ 03 — 流程</p>
+      <h2 class="display mt-4 text-display-lg" data-reveal>
+        五个步骤，
+        <span class="text-[var(--color-signal-hi)]">两个星期。</span>
+      </h2>
+    </div>
+
+    <ol class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] md:grid-cols-5">
+      {
+        process.map((s, i) => (
+          <li class="bg-[var(--color-ink-2)] p-6" data-reveal style={`animation-delay: ${40 * i}ms`}>
+            <span class="font-mono text-[11px] tracking-[0.22em] text-[var(--color-signal-2)]">0{i + 1}</span>
+            <h3 class="mt-3 font-display text-lg font-medium text-[var(--color-bone)]">{s.t}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-[var(--color-bone-dim)]">{s.p}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="container-x py-16 md:py-24 border-t border-[var(--color-rule-ink)]">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 items-end">
+      <h3 class="md:col-span-2 display text-display-md max-w-3xl">
+        带着已经交付过的系统来。
+        <span class="text-[var(--color-signal-hi)]">也带着对下一个系统的食欲来。</span>
+      </h3>
+      <a
+        href="mailto:careers@sigmafi.ai"
+        class="inline-flex items-center gap-3 self-start rounded-full px-6 py-3 font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-ink)]"
+        style="background: linear-gradient(135deg, var(--color-signal), var(--color-signal-2));"
+      >
+        careers@sigmafi.ai
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

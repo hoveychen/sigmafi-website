@@ -1,0 +1,137 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PageHero from "~/components/PageHero.astro";
+import { localizePath } from "~/i18n/ui";
+
+const lang = "en" as const;
+
+const assets = [
+  {
+    tag: "EQUITIES · ETFs",
+    title: "ETFs, single names and ADRs",
+    summary:
+      "Liquidity provision and statistical strategies across US, Hong Kong, Japan and pan-Asia listings. Heritage from Jane Street's ETF and equities desks — applied with modern compute.",
+    rows: [
+      { k: "Coverage", v: "US · HKEX · TSE · KRX · SGX · LSE" },
+      { k: "Instruments", v: "ETFs · single names · ADRs · GDRs" },
+      { k: "Modes", v: "Continuous quoting · auction · sweep" },
+      { k: "Style", v: "Stat arb · pairs · index arb · market making" },
+    ],
+    note: "Cross-listing and creation/redemption arbitrage on the Asia ↔ US axis is a special focus.",
+  },
+  {
+    tag: "DERIVATIVES",
+    title: "Options, futures & volatility",
+    summary:
+      "Listed and OTC derivatives. Vol arb, calendar and skew trades, and listed-vs-OTC dislocations — supported by ML-driven implied-surface calibration and risk-parity sizing.",
+    rows: [
+      { k: "Coverage", v: "Index · single-name · sector ETFs" },
+      { k: "Models", v: "SVI/SSVI · neural surfaces · regime-aware" },
+      { k: "Trades", v: "Calendar · skew · dispersion · listed-vs-OTC" },
+      { k: "Risk", v: "Greek + path · stress · scenario books" },
+    ],
+    note: "Calibrated to a moving universe of ~3,800 actively traded contracts.",
+  },
+  {
+    tag: "RATES · FX",
+    title: "Fixed income & macro",
+    summary:
+      "Yield-curve trades, basis swaps, cross-currency basis and macro spread strategies — drawing from Citadel-style fixed income playbooks executed on a modern compute stack.",
+    rows: [
+      { k: "Products", v: "Sov bonds · IRS · OIS · futures · FX" },
+      { k: "Themes", v: "Curve · carry · basis · cross-ccy" },
+      { k: "Horizon", v: "Intraday → multi-day mean reversion" },
+      { k: "Hedging", v: "Listed futures + cleared swaps" },
+    ],
+    note: "Macro overlay is risk-managed alongside cross-asset books — no siloed surprises.",
+  },
+  {
+    tag: "CRYPTO · PREDICTION",
+    title: "Digital assets & prediction markets",
+    summary:
+      "We started as a crypto market maker. We still trade BTC, ETH and majors across CEXes and DEXes, and we're pushing into prediction markets where short-horizon edges remain abundant.",
+    rows: [
+      { k: "Spot", v: "BTC · ETH · majors · select alts" },
+      { k: "Derivs", v: "Perp · dated futures · options" },
+      { k: "Venues", v: "Tier-1 CEX · select DEX · prediction MMs" },
+      { k: "Style", v: "Market making · stat arb · basis" },
+    ],
+    note: "Crypto remains the laboratory: 24/7 liquidity, exotic microstructure, fast feedback.",
+  },
+];
+---
+
+<BaseLayout
+  title="Markets"
+  description="Multi-asset coverage from Hong Kong as our anchor. ETFs, options, futures, fixed income, crypto and prediction markets — one risk substrate, one execution stack."
+>
+  <PageHero
+    eyebrow="§ Markets"
+    meta="Equities · Derivatives · Rates · Digital"
+    title={"Where conviction<br/><span class=\"text-[var(--color-signal-hi)]\">meets liquidity.</span>"}
+    subtitle="Multi-asset coverage from Hong Kong as our anchor. Each venue we touch is governed by the same risk substrate and the same execution stack — so a signal that works in Tokyo ETFs travels cleanly into HK options and US futures."
+  />
+
+  <section class="container-x py-20 md:py-28">
+    <ol class="space-y-px overflow-hidden rounded-2xl border border-[var(--color-rule-ink)]">
+      {
+        assets.map((a, i) => (
+          <li class="bg-[var(--color-ink-2)] p-8 md:p-10" data-reveal style={`animation-delay: ${60 * i}ms`}>
+            <div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+              <header class="lg:col-span-5">
+                <div class="flex items-center gap-3">
+                  <span class="font-mono text-[10px] tracking-[0.24em] uppercase text-[var(--color-signal-2)]">{a.tag}</span>
+                  <span class="h-px flex-1 bg-[var(--color-rule-ink)]" />
+                  <span class="font-mono text-[10px] tracking-[0.22em] text-[var(--color-muted-ink)]">.{String(i + 1).padStart(2, "0")}</span>
+                </div>
+                <h2 class="mt-4 font-display text-3xl font-medium text-[var(--color-bone)] tracking-tight">{a.title}</h2>
+                <p class="mt-5 max-w-lg text-[var(--color-bone-dim)] leading-relaxed">{a.summary}</p>
+                <p class="mt-6 font-mono text-[11px] leading-relaxed tracking-[0.14em] text-[var(--color-muted-ink)]">
+                  ↳ {a.note}
+                </p>
+              </header>
+
+              <div class="lg:col-span-7">
+                <dl class="grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-[var(--color-rule-ink)] bg-[var(--color-rule-ink)] sm:grid-cols-2">
+                  {a.rows.map((r) => (
+                    <div class="bg-[var(--color-ink)] p-5">
+                      <dt class="font-mono text-[10px] tracking-[0.22em] uppercase text-[var(--color-muted-ink)]">
+                        {r.k}
+                      </dt>
+                      <dd class="mt-2 text-sm text-[var(--color-bone)]">{r.v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="border-t border-[var(--color-rule-ink)] bg-[var(--color-ink-2)]">
+    <div class="container-x py-20 md:py-28">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 items-end">
+        <h3 class="lg:col-span-7 display text-display-lg">
+          One execution stack.
+          <span class="text-[var(--color-signal-hi)]">Every venue speaks the same language.</span>
+        </h3>
+        <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+          <a
+            href={localizePath("/research", lang)}
+            class="rounded-full border border-[var(--color-rule-ink)] px-5 py-3 text-center font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+          >
+            Research approach →
+          </a>
+          <a
+            href={localizePath("/technology", lang)}
+            class="rounded-full border border-[var(--color-rule-ink)] px-5 py-3 text-center font-mono text-[12px] tracking-[0.18em] uppercase text-[var(--color-bone)] hover:border-[var(--color-signal-2)] hover:text-[var(--color-signal-hi)] transition-colors"
+          >
+            CWS platform →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

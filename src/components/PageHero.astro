@@ -1,0 +1,54 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+  meta?: string;
+}
+
+const { eyebrow, title, subtitle, meta } = Astro.props;
+---
+
+<section class="relative isolate overflow-hidden border-b border-[var(--color-rule-ink)]">
+  <div aria-hidden="true" class="absolute inset-0 grid-bg opacity-50"></div>
+  <div
+    aria-hidden="true"
+    class="absolute -top-24 right-10 h-[420px] w-[420px] rounded-full blur-3xl"
+    style="background: radial-gradient(circle, rgba(168,85,247,0.20) 0%, transparent 65%);"
+  >
+  </div>
+
+  <div class="container-x relative pt-24 pb-16 md:pt-32 md:pb-20">
+    <div class="flex items-center gap-3" data-reveal>
+      <span class="inline-flex h-1.5 w-1.5 rounded-full" style="background: var(--color-signal);"></span>
+      <span class="eyebrow">{eyebrow}</span>
+      {
+        meta && (
+          <>
+            <span class="h-px w-12 bg-[var(--color-rule-ink)]" aria-hidden="true" />
+            <span class="font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--color-muted-ink)]">
+              {meta}
+            </span>
+          </>
+        )
+      }
+    </div>
+
+    <h1
+      class="display mt-8 text-display-xl text-[var(--color-bone)] max-w-4xl"
+      data-reveal
+      set:html={title}
+    ></h1>
+
+    {
+      subtitle && (
+        <p
+          class="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--color-bone-dim)]"
+          data-reveal
+          style="animation-delay: 80ms;"
+          set:html={subtitle}
+        />
+      )
+    }
+  </div>
+</section>

@@ -1,0 +1,24 @@
+---
+import {
+  getLangFromUrl,
+  alternateLangPath,
+  useTranslations,
+  languages,
+} from "~/i18n/ui";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const targetLang = lang === "en" ? "zh" : "en";
+const altPath = alternateLangPath(Astro.url, targetLang);
+---
+
+<a
+  href={altPath}
+  class="group inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.2em] uppercase text-[var(--color-bone-dim)] hover:text-[var(--color-signal-hi)] transition-colors"
+  aria-label={`${t("lang.label")} — ${languages[targetLang]}`}
+  hreflang={targetLang}
+>
+  <span aria-hidden="true" class="text-[var(--color-bone)]">{languages[lang]}</span>
+  <span aria-hidden="true" class="text-[var(--color-rule-ink)] group-hover:text-[var(--color-signal-2)] transition-colors">/</span>
+  <span>{languages[targetLang]}</span>
+</a>
