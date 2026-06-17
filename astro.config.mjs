@@ -3,8 +3,11 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 
+import cloudflare from "@astrojs/cloudflare";
+
 export default defineConfig({
   site: "https://sigmafi.ai",
+
   i18n: {
     defaultLocale: "en",
     locales: ["en", "zh"],
@@ -13,6 +16,7 @@ export default defineConfig({
       redirectToDefaultLocale: false,
     },
   },
+
   integrations: [
     sitemap({
       i18n: {
@@ -24,11 +28,15 @@ export default defineConfig({
       },
     }),
   ],
+
   vite: {
     plugins: [tailwindcss()],
   },
+
   build: {
     inlineStylesheets: "auto",
   },
+
   compressHTML: true,
+  adapter: cloudflare()
 });
