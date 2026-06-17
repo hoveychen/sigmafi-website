@@ -127,6 +127,22 @@ html[lang="zh"] {
   color: var(--color-ink);
 }
 
+/* ---------- Primary CTA hover ----------
+ * The flat-fill primary buttons carry their brand background inline
+ * (style="background: var(--color-signal)"). Inline styles can't express
+ * :hover, so the lift lives here — a subtle brighten + 1px rise. Scoped to
+ * <a> so the eyebrow ping dots (same inline bg, but <span>) stay untouched. */
+a[style*="background: var(--color-signal);"] {
+  transition:
+    filter 0.2s var(--ease-soft),
+    transform 0.2s var(--ease-soft);
+}
+
+a[style*="background: var(--color-signal);"]:hover {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+}
+
 /* ---------- Reusable utilities ---------- */
 @utility eyebrow {
   font-family: var(--font-mono);
