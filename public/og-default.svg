@@ -5,17 +5,17 @@
       <stop offset="1" stop-color="#1c1233"/>
     </linearGradient>
     <radialGradient id="glow1" cx="0.8" cy="0.2" r="0.7">
-      <stop offset="0" stop-color="#d946ef" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#d946ef" stop-opacity="0"/>
+      <stop offset="0" stop-color="#e23ab0" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#e23ab0" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="glow2" cx="0.1" cy="0.9" r="0.6">
-      <stop offset="0" stop-color="#7c3aed" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#7c3aed" stop-opacity="0"/>
+      <stop offset="0" stop-color="#5f23ad" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#5f23ad" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="sigma" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#d946ef"/>
-      <stop offset="0.5" stop-color="#a855f7"/>
-      <stop offset="1" stop-color="#7c3aed"/>
+      <stop offset="0" stop-color="#e23ab0"/>
+      <stop offset="0.5" stop-color="#9c33d6"/>
+      <stop offset="1" stop-color="#5f23ad"/>
     </linearGradient>
   </defs>
 
@@ -41,14 +41,14 @@
   <g transform="translate(80, 90)">
     <circle cx="40" cy="40" r="40" fill="url(#sigma)"/>
     <circle cx="40" cy="40" r="34" fill="#0a0612"/>
-    <text x="40" y="56" text-anchor="middle" fill="#f0abfc" font-family="Geist, Inter, sans-serif" font-size="44" font-weight="500">σ</text>
+    <text x="40" y="56" text-anchor="middle" fill="#f3a6e2" font-family="Fraunces, Georgia, 'Times New Roman', serif" font-size="44" font-weight="500">σ</text>
   </g>
   <text x="180" y="148" fill="#ebe4f0" font-family="Geist, Inter, sans-serif" font-size="34" font-weight="600">SigmaFi Research</text>
 
   <!-- Headline -->
-  <text x="80" y="320" fill="#ebe4f0" font-family="Geist, Inter, sans-serif" font-size="78" font-weight="500" letter-spacing="-2">Engineering edge</text>
-  <text x="80" y="408" fill="#ebe4f0" font-family="Geist, Inter, sans-serif" font-size="78" font-weight="500" letter-spacing="-2">across every</text>
-  <text x="80" y="496" fill="#f0abfc" font-family="Geist, Inter, sans-serif" font-size="78" font-weight="500" letter-spacing="-2">liquid market.</text>
+  <text x="80" y="320" fill="#ebe4f0" font-family="Fraunces, Georgia, 'Times New Roman', serif" font-size="78" font-weight="500" letter-spacing="-2">Engineering edge</text>
+  <text x="80" y="408" fill="#ebe4f0" font-family="Fraunces, Georgia, 'Times New Roman', serif" font-size="78" font-weight="500" letter-spacing="-2">across every</text>
+  <text x="80" y="496" fill="#f3a6e2" font-family="Fraunces, Georgia, 'Times New Roman', serif" font-size="78" font-weight="500" letter-spacing="-2">liquid market.</text>
 
   <!-- Footer rule -->
   <line x1="80" y1="560" x2="1120" y2="560" stroke="#1f1432"/>

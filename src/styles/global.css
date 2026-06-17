@@ -18,20 +18,23 @@
   --color-muted-ink: #7b6d92;
   --color-muted-paper: #6f6275;
 
-  /* Signature accents — matches the magenta→violet gradient in the σ mark */
-  --color-signal: #d946ef;
-  --color-signal-2: #a855f7;
-  --color-signal-3: #7c3aed;
-  --color-signal-glow: rgba(168, 85, 247, 0.22);
-  --color-signal-hi: #f0abfc;
+  /* Signature accents — sampled off the σ mark's magenta→violet sweep.
+   * Deliberately nudged off Tailwind's stock fuchsia-500/purple-500/violet-600
+   * (#d946ef / #a855f7 / #7c3aed) so the palette reads as brand, not default. */
+  --color-signal: #e23ab0;
+  --color-signal-2: #9c33d6;
+  --color-signal-3: #5f23ad;
+  --color-signal-glow: rgba(156, 51, 214, 0.22);
+  --color-signal-hi: #f3a6e2;
 
   /* Semantic accents (PnL / market) */
   --color-up: #65d6a0;
   --color-down: #ef6f6f;
   --color-cyan: #67e8f9;
 
-  /* Typography */
-  --font-display: "Geist", "Inter Tight", "Inter", system-ui, sans-serif;
+  /* Typography — display is a high-contrast serif (Fraunces) for editorial
+   * gravitas + a point of view; body/UI stay on Geist, mono on Geist Mono. */
+  --font-display: "Fraunces", "Times New Roman", Georgia, serif;
   --font-sans: "Geist", "Inter", system-ui, -apple-system, "PingFang SC",
     "Noto Sans SC", "Microsoft YaHei", sans-serif;
   --font-mono: "Geist Mono", "JetBrains Mono", "SF Mono", ui-monospace,
@@ -145,9 +148,10 @@ html[lang="zh"] {
 
 @utility display {
   font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 0.98;
+  font-weight: 480;
+  letter-spacing: -0.012em;
+  line-height: 1;
+  font-optical-sizing: auto;
 }
 
 @utility hairline {
